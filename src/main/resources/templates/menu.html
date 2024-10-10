@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+  <style>
+    .navbar {
+      background-color:  #880e4f;
+      cursor: pointer;
+    }
+
+    .welcomeProfileImageCircle{
+      height: 35px;
+      width: 35px;
+      border-radius: 17px;
+    }
+    .day-menu{
+      padding-top: 10px;
+    }
+    .menu_day{
+      display: block;
+      width: 100%;
+      font-size: 20px;
+      font-weight: 600;
+      color: teal;
+      margin-bottom: 0px;
+      margin-left: 20px;
+      text-align: left;
+    }
+    .menu_food{
+      display: block;
+      width: 100%;
+      font-size: 15px;
+      color: #333333;
+      text-align: left;
+      margin-left: 20px;
+      margin-bottom: 0px;
+    }
+
+    .card-body{
+      letter-spacing: 2px;
+      min-height: 551px;
+    }
+
+    .logo {
+      background: url("https://www.genkey.com/wp-content/themes/genkey/public/images/logo.svg")
+      no-repeat;
+      background-size: 100%;
+      display: block;
+      float: left;
+      height: 36px;
+      width: 86px;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-weight: bold;
+    }
+
+    .center-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 40px;
+      height: 90vh;
+    }
+
+    .main-content {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 0px 40px;
+      justify-content: center;
+    }
+
+    /*.tab-content {*/
+    /*    display: flex;*/
+    /*    justify-content: center;*/
+    /*    align-items: center;*/
+    /*}*/
+
+    .tab-pane {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-group button {
+      flex: 1;
+      margin: 0 5px;
+    }
+
+    .navButton{
+      color: #fff;
+      background-color:  #880e4f;
+    }
+
+
+    .disabledButton{
+      cursor: not-allowed;
+      opacity: 0.5;
+      color: #171717;
+      background-color: #919191;
+    }
+
+    .form-content {
+      width: 100%;
+      padding: 65px 51px 20px;
+    }
+
+    .form-control {
+      height: 37px;
+      border: none;
+      border-bottom: 2px solid #e6e6e6;
+      width: 100%;
+      color: #666; }
+    .form-control:focus {
+      border-color: #e9e0cf; }
+    .form-control::-webkit-input-placeholder {
+      color: #999; }
+    .form-control::-moz-placeholder {
+      color: #999; }
+    .form-control:-ms-input-placeholder {
+      color: #999; }
+    .form-control:-moz-placeholder {
+      color: #999; }
+
+    select.form-control {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      color: #999; }
+    select.form-control option[value=""][disabled] {
+      display: none; }
+
+    textarea.form-control {
+      padding: 8px 0;
+      no-repeat: right bottom 3px; }
+
+    .form-header {
+      text-align: center; }
+
+    h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      color: #453e79;
+      text-transform: uppercase;
+      letter-spacing: 7px;
+      padding: 5px 15px;
+      display: inline-block;
+      border: 1px solid #dad8e4;
+      margin-bottom: 75px; }
+
+    p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      color: teal;
+      text-align: center;
+      margin-bottom: 26px; }
+
+    .form-row {
+      display: flex;
+      margin-bottom: 18px; }
+    .form-row .form-holder {
+      width: 50%;
+      margin-right: 30px; }
+    .form-row .form-holder:last-child {
+      margin-right: 0; }
+    .form-row .form-holder.w-100 {
+      width: 100%;
+      margin-right: 0; }
+    .form-row .select {
+      width: 50%;
+      margin-right: 30px; }
+    .form-row .select .form-holder {
+      width: 100%;
+      margin-right: 0; }
+
+    .actions {
+      right: 50%;
+      transform: translateX(50%);
+      bottom: 3%; }
+
+    .submitBtnContainer{
+      float: right;
+    }
+
+    .submitBtn{
+      background-color: teal;
+      color: #FFFFFF;
+      height: 40px;
+      width: 135px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .loader{
+      font-size: 0;
+      height: 30px;
+      width: 30px;
+      background: transparent;
+      border:3px solid #8a0303;
+      border-radius: 100%;
+      border-top-color: transparent;
+      animation: animate 1s 0.4s linear infinite;
+    }
+
+    @keyframes animate {
+      100%{transform: rotate(360deg)}
+    }
+
+    .loader{
+      font-size: 0;
+      height: 30px;
+      width: 30px;
+      background: transparent;
+      border:3px solid #FFFFFF;
+      border-radius: 100%;
+      border-top-color: transparent;
+      animation: animate 1s 0.4s linear infinite;
+    }
+
+    @keyframes animate {
+      100%{transform: rotate(360deg)}
+    }
+
+    .finished{
+      font-size: 0;
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      position: relative;
+      animation: special 0.1s ease-in;
+    }
+    @keyframes special{
+      10%{
+        transform:scale(0.8) translateY(20px);
+      }
+      35%{
+        transform: scale(1) translateY(0px);
+      }
+    }
+    .btn:not(.btn-link):not(.btn-circle):hover {
+      outline: none;
+    }
+
+    button:hover {
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(236, 233, 233, 0.23);
+      outline: none;
+    }
+
+
+    @media(min-width: 992px){
+      .backgroundImage {
+        background-image: url(https://res.cloudinary.com/dqfpvfch6/image/upload/v1677246874/zamve5recmhejzkgfjxv.jpg);
+        background-size: cover;
+      }
+
+      .navbar-nav a:hover,
+      .navbar-nav a:focus {
+        color: #9a9a9a;
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+      .dropdown-item {
+        color: #fff;
+        border: none;
+        outline: none;
+      }
+
+      .navItemIcon{
+        display: none;
+      }
+    }
+
+
+    @media (max-width: 576px) {
+      .backgroundGradient {
+        background: linear-gradient(to bottom, #110629, #302054);
+      }
+
+      .navbar-collapse {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: fit-content;
+        width: 50%;
+        background-color: #fff;
+        z-index: 999;
+        transition: right 0.3s ease-in-out;
+        border-radius: 4px;
+        margin: 60px 5px;
+      }
+
+      .navbar-collapse.show {
+        right: 0;
+      }
+
+      .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .navbar-nav .nav-link {
+        padding: 5px;
+      }
+
+      .dropdown-item {
+        color: teal;
+        border: none;
+        outline: none;
+      }
+
+      .navbar-nav a:hover,
+      .navbar-nav a:focus {
+        color: #9a9a9a;
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+      /*.tab-content {*/
+      /*    display: flex;*/
+      /*    justify-content: center;*/
+      /*    align-items: center;*/
+      /*}*/
+
+      .form-content {
+        justify-content: center;
+        padding: 0px 5px;
+        width: 100%;
+        margin: 0px;
+      }
+
+      .menu-card {
+        display: none;
+      }
+
+      .right-card {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        height: 500px;
+      }
+      .submitBtnContainer{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+      }
+
+      .submitBtn{
+        width: 200px;
+      }
+
+      .navButton{
+        margin-bottom: 20px ;
+      }
+    }
+  </style>
+  <title>Responsive Page</title>
+</head>
+<body class="backgroundGradient backgroundImage">
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid ">
+    <a class="navbar-brand logo" ></a>
+    <a class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class='bx bx-menu' style="float: right;color: #fff"></i>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav dropdown-content ms-auto">
+        <a class="dropdown-item" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" th:href="@{/admin/admindashboard}" style="margin: 0px">
+          <i class=' bx bx-home-circle navItemIcon'></i>
+          <span class="links_name" style="padding-left: 15px">Admin home</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/profile}" style="margin: 0px">
+          <i class='bx bx-user navItemIcon'></i>
+          <span class="links_name" style="padding-left: 15px">Profile</span>
+        </a>
+
+        <a class="dropdown-item" th:href="@{/}" style="margin: 0px">
+          <i class='bx bx-food-menu navItemIcon' ></i>
+          <span class="links_name" style="padding-left: 15px">Menu</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/logout}" style="margin: 0px">
+          <i class='bx bx bx-log-out navItemIcon'></i>
+          <span class="links_name" style="padding-left: 15px">Logout</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="center-content">
+  <div class="container-fluid">
+    <div class="row ">
+      <div class="col-md-4  menu-card">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="day-menu" th:each="mapEntry : ${OCR}">
+              <p class="menu_day" th:text="${mapEntry.key}">Day</p>
+              <p class="menu_food" th:each="item : ${mapEntry.value}" th:text="${item}">Meal</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card shadow text-center right-card">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="monday">
+              <div class="form-content">
+                <div class="form-header">
+                  <h3>Monday</h3>
+                </div>
+                <form id="frm_details" method="post" name="frm_details">
+                  <p>Select your preferred food from the dropdown</p>
+                  <div class="form-row">
+                    <div class="form-holder w-100">
+                      <!--                <input type="number" placeholder="Food number" id="orderPosition0" name="orderPosition" class="form-control" required>-->
+                      <select class=" form-control form-select"  id="orderPosition0"  name="orderPosition" required>
+                        <option value="" selected disabled hidden>Choose food</option>
+                        <option th:each="mondays: ${monday}"
+                                th:text="${mondays.food}">...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-holder w-100">
+                    <input type="hidden" placeholder="Food number" id="dayPosition0" name="dayPosition" class="form-control">
+                    <input type="hidden" placeholder="Food number" id="deliveryDate0" name="time" class="form-control">
+                  </div>
+                  <div title="fill form before ordering!" class="submitBtnContainer" >
+                    <button class="submitBtn"  type="submit" >Order</button>
+                  </div>
+                </form>
+                <div>
+                  <p style="float: left;font-size: 13px;margin-top: 20px"></p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="tuesday">
+              <div class="form-content">
+                <div class="form-header">
+                  <h3>Tuesday</h3>
+                </div>
+                <form  id="frm_detail" method="post" name="frm_detail">
+                  <p>Select your preferred food from the dropdown</p>
+                  <div class="form-row">
+                    <div class="form-holder w-100">
+                      <!--                <input type="number" placeholder="Food number" id="orderPosition2" name="orderPosition" class="form-control" required>-->
+                      <select class=" form-control form-select"  id="orderPosition2"  name="orderPosition" required>
+                        <option value="" selected disabled hidden>Choose food</option>
+                        <option th:each="wednesdays: ${tuesday}"
+                                th:text="${wednesdays.food}">...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-holder w-100">
+                    <input type="hidden" placeholder="Food number" id="dayPosition1" name="dayPosition" class="form-control">
+                    <input type="hidden" placeholder="Food number" id="deliveryDate1" name="time" class="form-control">
+                  </div>
+                  <div class="submitBtnContainer" >
+                    <button class="submitBtn"  type="submit" >Order</button>
+                  </div>
+                </form>
+                <div>
+                  <p style="float: left;font-size: 13px;margin-top: 20px">NB: Want to order for skipped day? Click the back button.</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wednesday">
+              <div class="form-content">
+                <div class="form-header">
+                  <h3>Wednesday</h3>
+                </div>
+                <form id="frm_details2" method="post" name="frm_details2">
+                  <p>Select your preferred food from the dropdown</p>
+                  <div class="form-row">
+                    <div class="form-holder w-100">
+                      <!--                <input type="number" placeholder="Food number" id="orderPosition4" name="orderPosition" class="form-control" required>-->
+                      <select class=" form-control form-select"  id="orderPosition4"  name="orderPosition" required>
+                        <option value="" selected disabled hidden>Choose food</option>
+                        <option th:each="wednesdays: ${wednesday}"
+                                th:text="${wednesdays.food}">...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-holder w-100">
+                    <input type="hidden" placeholder="Food number" id="dayPosition2" name="dayPosition" class="form-control">
+                    <input type="hidden" placeholder="Food number" id="deliveryDate2" name="time" class="form-control">
+                  </div>
+                  <div class="submitBtnContainer" >
+                    <button class="submitBtn"  type="submit" >Order</button>
+                  </div>
+                </form>
+                <div>
+                  <p style="float: left;font-size: 13px;margin-top: 20px">NB: Want to order for skipped day? Click the back button.</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="thursday">
+              <div class="form-content">
+                <div class="form-header">
+                  <h3>Thursday</h3>
+                </div>
+                <form id="frm_details3" method="post" name="frm_details3">
+                  <p>Select your preferred food from the dropdown</p>
+                  <div class="form-row">
+                    <div class="form-holder w-100">
+                      <!--                <input type="number" placeholder="Food number" id="orderPosition5" name="orderPosition" class="form-control" required>-->
+                      <select class=" form-control form-select"  id="orderPosition5"  name="orderPosition" required>
+                        <option value="" selected disabled hidden>Choose food</option>
+                        <option th:each="wednesdays: ${thursday}"
+                                th:text="${wednesdays.food}">...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-holder w-100">
+                    <input type="hidden" placeholder="Food number" id="dayPosition3" name="dayPosition" class="form-control">
+                    <input type="hidden" placeholder="Food number" id="deliveryDate3" name="time" class="form-control">
+                  </div>
+                  <div class="submitBtnContainer" >
+                    <button class="submitBtn"  type="submit" >Order</button>
+                  </div>
+                </form>
+                <div>
+                  <p style="float: left;font-size: 13px;margin-top: 20px">NB: Want to order for skipped day? Click the back button.</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="friday">
+              <div class="form-content">
+                <div class="form-header">
+                  <h3>Friday</h3>
+                </div>
+                <form id="frm_details4" name="frm_details4" method="post">
+                  <p>Select your preferred food from the dropdown</p>
+                  <div class="form-row">
+                    <div class="form-holder w-100">
+                      <!--                <input type="number" placeholder="Food number" id="orderPosition1" name="orderPosition" class="form-control" required>-->
+                      <select class=" form-control form-select"  id="orderPosition1"  name="orderPosition" required>
+                        <option value="" selected disabled hidden>Choose food</option>
+                        <option th:each="fridays: ${friday}"
+                                th:text="${fridays.food}">...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-holder w-100">
+                    <input type="hidden" placeholder="Food number" id="dayPosition4" name="dayPosition" class="form-control">
+                    <input type="hidden" placeholder="Food number" id="deliveryDate4" name="time" class="form-control">
+                  </div>
+
+                  <div class="submitBtnContainer" >
+                    <button class="submitBtn"  type="submit" >Order</button>
+                  </div>
+                </form>
+                <div>
+                  <p style="float: left;font-size: 13px;margin-top: 20px">NB: Want to order for skipped day? Click the back button.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group mt-3">
+          <button class="btn navButton" id="prev-tab">Back</button>
+          <button class="btn navButton" id="next-tab">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer class="footer mt-auto py-3 " style="background-color: #880e4f;position: fixed; bottom: 0;width: 100%">
+    <div class="container-fluid pi-align-center">
+      <span class="text-light">&copy; GenKey2023 All Rights Reserved.</span>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+  document.addEventListener('click', function(event) {
+    var targetElement = event.target;
+    var dropdown = document.querySelector('.navbar-collapse.show');
+
+    if (dropdown && !dropdown.contains(targetElement)) {
+      dropdown.classList.remove('show');
+    }
+  });
+
+
+  document.getElementById('deliveryDate0').value = '6';
+  document.getElementById('deliveryDate1').value = '7';
+  document.getElementById('deliveryDate2').value = '8';
+  document.getElementById('deliveryDate3').value = '9';
+  document.getElementById('deliveryDate4').value = '10';
+
+  document.getElementById('dayPosition0').value = '0';
+  document.getElementById('dayPosition1').value = '1';
+  document.getElementById('dayPosition2').value = '2';
+  document.getElementById('dayPosition3').value = '3';
+  document.getElementById('dayPosition4').value = '4';
+
+
+
+
+  $(document).ready(function() {
+    // SUBMIT FORM
+    $("#frm_details").submit(function(event) {
+      // Prevent the form from submitting via the browser.
+      event.preventDefault();
+      ajaxPost($(this));
+      showNextTab();
+    });
+
+    $("#frm_detail").submit(function(event) {
+      // Prevent the form from submitting via the browser.
+      event.preventDefault();
+      ajaxPost($(this));
+      showNextTab();
+    });
+
+    $("#frm_details2").submit(function(event) {
+      // Prevent the form from submitting via the browser.
+      event.preventDefault();
+      ajaxPost($(this));
+      showNextTab();
+    });
+
+    $("#frm_details3").submit(function(event) {
+      // Prevent the form from submitting via the browser.
+      event.preventDefault();
+      ajaxPost($(this));
+      showNextTab();
+    });
+
+    $("#frm_details4").submit(function(event) {
+      // Prevent the form from submitting via the browser.
+      event.preventDefault();
+      ajaxPost($(this));
+    });
+
+    function ajaxPost(form) {
+      // DO POST
+      $.ajax({
+        type: "POST",
+        url: "saveMenu",
+        data: form.serialize(),
+        success: function(e) {
+          showSwal('auto-close');
+        },
+        error: function(e) {
+          alert("Error!");
+          console.log("ERROR: ", e);
+        }
+      });
+    }
+  });
+
+  function loadNextTab() {
+    var activeTab = $(".tab-pane.active");
+    var nextTab = activeTab.next(".tab-pane");
+
+    if (nextTab.length > 0) {
+      activeTab.removeClass("show active");
+      nextTab.addClass("show active");
+      $('a[href="#' + nextTab.attr("id") + '"]').tab("show");
+    }
+    // prevBtn.disabled = false;
+    // prevBtn.classList.remove("disabledButton");
+
+  }
+
+
+    // var tabContent = document.querySelectorAll('.tab-content .tab-pane');
+    // var prevBtn = document.getElementById('prev-tab');
+    // var nextBtn = document.getElementById('next-tab');
+    //
+    // var currentDate = new Date();
+    // var currentDay = currentDate.getDay();
+    // var currentIndex = currentDay - 1; // Set the active tab based on the current day
+    //
+    // // Check if it's Friday after 12 PM, then set the active tab to Monday
+    // if (currentDay === 5 && currentDate.getHours() >= 12) {
+    //   currentIndex = 0;
+    // }
+
+
+    var tabContent = document.querySelectorAll('.tab-content .tab-pane');
+    var prevBtn = document.getElementById('prev-tab');
+    var nextBtn = document.getElementById('next-tab');
+
+    var currentDate = new Date();
+    var currentDay = currentDate.getDay();
+    var currentIndex;
+
+
+// Set the active tab based on the current day
+    if (currentDay === 0 || currentDay === 6) {
+      // Saturday or Sunday
+      currentIndex = 0; // Set the active tab to Monday
+    } else if (currentDay === 5 && currentDate.getHours() >= 12) {
+      // Friday after 12 PM
+      currentIndex = 0; // Set the active tab to Monday
+    } else {
+      currentIndex = currentDay - 1; // Set the active tab based on the current day
+
+    }
+
+
+    showTab(currentIndex);
+
+    function showTab(index) {
+      tabContent.forEach(function(tab, i) {
+        tab.classList.toggle('active', i === index);
+        tab.classList.toggle('show', i === index);
+      });
+
+      currentIndex = index;
+      updateButtonStates();
+    }
+
+    function showNextTab() {
+      if (currentIndex < tabContent.length - 1) {
+        showTab(currentIndex + 1);
+      }
+      updateButtonStates();
+    }
+
+    function showPrevTab() {
+      if (currentIndex > 0) {
+        showTab(currentIndex - 1);
+      }
+    }
+
+    function updateButtonStates() {
+      var currentTabDate = new Date();
+      var currentTabDay = currentTabDate.getDay();
+
+
+
+      //NEXT BUTTON DISABLED ON FRIDAY TAB
+      if ( currentIndex === 4) {
+        nextBtn.disabled = true;
+        nextBtn.classList.add("disabledButton");
+
+      }
+      else {
+        nextBtn.disabled = false;
+        nextBtn.classList.remove('disabledButton');
+      }
+
+      //PREV BUTTON DISABLED FOR MONDAY ON FRIDAY AFTER 12
+      if ( currentIndex === 0) {
+        prevBtn.disabled = true;
+        prevBtn.classList.add("disabledButton");
+      }
+      else {
+        prevBtn.disabled = false;
+        prevBtn.classList.remove('disabledButton');
+      }
+
+      // Disablethe "previous" button if the active tab is Monday or any previous day, except when the active tab is Friday afternoon or later, in which case the button remains enabled.
+      if (currentIndex <= currentTabDay - 1 && !((currentTabDay === 6 || currentTabDay === 0 ) || (currentTabDay === 5 && currentTabDate.getHours() >= 12))) {
+        prevBtn.disabled = true;
+        prevBtn.classList.add("disabledButton");
+      } else if (currentTabDay === 5 && currentTabDate.getHours() >= 12) {
+        prevBtn.disabled = false;
+        prevBtn.classList.remove("disabledButton");
+      } else {
+        prevBtn.disabled = false;
+        prevBtn.classList.remove("disabledButton");
+      }
+
+      nextBtn.disabled = false; // Enable the next button
+    }
+
+    prevBtn.addEventListener('click', function() {
+      showPrevTab();
+    });
+
+    nextBtn.addEventListener('click', function() {
+      showNextTab();
+    });
+
+    updateButtonStates();
+  });
+
+
+
+</script>
+<script>
+  //Sweetalert popup
+  (function($) {
+    showSwal = function(type) {
+      'use strict';
+      if (type === 'auto-close') {
+        swal({
+          type: 'success',
+          title: 'Order successful !',
+          showConfirmButton: false,
+          timer: 700,
+        }).then(
+                function() {},
+                // handling the promise rejection
+                function(dismiss) {
+                  if (dismiss === 'timer') {
+                    console.log('I was closed by the timer ')
+                  }
+                }
+        )
+      }else{
+        swal("Error occured !");
+      }
+    }
+
+  })(jQuery);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="form-body">
+    <div class="heading"><h1 style="font-size: 36px">Edit User</h1></div>
+
+
+    <form action="" th:action="@{/update}" th:object="${foods}" method="post">
+
+        <div>
+            <input required type="text" th:field="*{food}" title="Your food" name="food"  placeholder="Food">
+        </div>
+        <div class="doom">
+            <label for="fgroup_id">Fgroup_id</label>
+            <select th:field="*{fgroup_id}" id="category">
+                <option value="">Nothing selected</option>
+                <option th:each="category: ${T(com/genkey/foodmgt/model/impl/Foods).values()}"
+                        th:value="${fgroup_id}"
+                        th:text="${fgroup_id}">Category
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <input type="submit" value="save" id="submit">
+        </div>
+
+        <div class="back">
+            <a th:href="@{/adminmenu}"><span>Back</span></a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

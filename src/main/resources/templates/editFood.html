@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Registration</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    body{
+      text-align: center;
+      background: rgb(236, 236, 236);
+      /* user-select: none; */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .back {
+      margin-top: 20px;
+    }
+
+    .form-body{
+      width: 80%;
+
+      margin-top: 5px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+      border: 0.5px solid lightgrey;
+      background: white;
+      height: fit-content;
+      max-height: 1000px;
+    }
+
+    .social-login-links span a img{
+      width: 10%;
+      min-width: 50px;
+      max-width: 100px;
+      margin: 20px;
+      /* fill-rule:  */
+    }
+
+    .social-login-links{
+      background: rgba(185, 237, 255, 0.363);
+    }
+
+    form{
+      margin: 50px auto;
+    }
+
+    input{
+      margin-top: 30px;
+      border: none;
+      border-bottom: 0.2px solid rgb(179, 177, 177);
+      font-size: 18px;
+      width: 70%;
+      padding: 10px;
+      transition: 300ms;
+    }
+    #submit{
+      width: 130px;
+      padding: 10px 30px;
+      border: none;
+      background: rgb(60, 60, 247);
+      color: #fff;
+      cursor: pointer;
+      margin-top: 40px;
+    }
+
+    input:focus{
+      outline: none !important;
+      background: rgba(248, 242, 242, 0.685);
+    }
+
+  </style>
+</head>
+<body>
+<div class="form-body">
+  <div class="heading"><p style="font-size: 36px;">Edit Menu</p></div>
+
+  <form action="" th:action="@{/saveMenu}" th:object="${menu}" method="post">
+    <div>
+      <input required type="hidden" th:field="*{id}" readonly="readonly" title="Your id" name="id"  placeholder="id">
+    </div>
+    <div>
+      <input required type="text" th:field="*{Carbohydrate}" title="Your cost" name="cost"  placeholder="Carbohydrate">
+    </div>
+
+    <div>
+      <input required type="text" th:field="*{Soup}" title="Your cost" name="cost"  placeholder="Soup">
+    </div>
+    <div>
+      <input required type="text" th:field="*{Stew}" title="Your cost" name="cost"  placeholder="Stew">
+    </div>
+    <div>
+      <input required type="text" th:field="*{Protein}" title="Your cost" name="cost"  placeholder="Protein">
+    </div>
+    <div>
+      <input required type="text" th:field="*{Drink}" title="Your cost" name="cost"  placeholder="Drink">
+    </div>
+
+
+    <div>
+      <input type="submit" value="Add" id="submit">
+    </div>
+
+    <div class="back">
+      <a th:href="@{/adminmenu}"><span>Back</span></a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

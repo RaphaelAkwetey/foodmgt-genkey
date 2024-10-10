@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <h:head>
+        <title>User Settings</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body>
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div class="row">
+
+            <div class="col s2 grey lighten-2" style="margin-top: 10px; width: 16.5%;min-height: 88vh">
+                <!-- Grey navigation panel -->
+                <br/>
+
+                <div class="row">
+                    <div class="card-panel blue-grey darken-1 z-depth-4">
+                        <div class="row valign-wrapper">
+                            <div class="col s6">
+                                <img src="https://png.icons8.com/color/1600/avatar.png" alt="" class="circle responsive-img"/> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s6">
+                                <span class="white-text">
+                                    Admin
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<br/><br/><br/><br/><br/><br/>-->
+
+                <div class="collection" style="height:100% ">
+                    <a href="admindashboard.xhtml" class="collection-item">Dashboard</a>
+                    <a href="adminusers.xhtml" class="collection-item active pink darken-4">Users</a>
+                    <a href="adminvendors.xhtml" class="collection-item">Vendors</a>
+                    <a href="adminmenu.xhtml" class="collection-item">Menus</a>
+                    <a href="reportcenter.xhtml" class="collection-item">Report Center</a>
+                </div>
+            </div>
+
+            <div class="col s10 card teal lighten-2" style="width:83%;float:right;min-height: 88vh;">
+                <!-- Teal page content  -->
+                <br/>
+
+                <div class="container">
+                    <div class="row">
+                        <a class="modal-trigger" href="#modal1">
+                            <div class="card col s4 offset-s1">
+                                <div class="card-content center-align black-text">
+                                    Food Cap: GHc#{metaBean.getPersistentCap()} 
+
+                                    <div style="float: right"><i class="material-icons teal-text text-darken-4">edit</i></div>
+                                </div>                             
+                            </div>  
+                        </a>
+                        <!-- Modal Structure -->
+                        <div id="modal1" class="modal col s4">
+                            <div class="modal-content">
+                                <h5>Set New Cap</h5>
+                                <div class="row">
+                                    <h:form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <p:inputText id="cap" value="#{metaBean.cap}"/>
+                                                <label for="cap">New Cap</label>
+                                            </div>
+                                            <h:commandButton action="#{metaBean.editCap}" value="Set" styleClass="btn btn-small" />
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div> 
+                        </div>
+                        <a class="modal-trigger" href="#modal2">
+                            <div class="card col s4 offset-s1">
+                                <div class="card-content center-align black-text">
+                                    Intern Credit: GHc#{metaBean.getPersistentCredit()}
+                                    <div style="float: right"><i class="material-icons teal-text text-darken-4">edit</i></div>
+                                </div>
+
+                            </div>
+                        </a>
+                        <!-- Modal Structure -->
+                        <div id="modal2" class="modal col s4">
+                            <div class="modal-content">
+                                <h5>Set New Credit</h5>
+                                <div class="row">
+                                    <h:form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <p:inputText id="credit" value="#{metaBean.credit}"/>
+                                                <label for="cap">New Credit</label>
+                                            </div>
+                                            <h:commandButton action="#{metaBean.editCredit}" value="Set" styleClass="btn btn-small" />
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <h:dataTable value="#{userBean.findAll()}" var="sub"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+
+
+                        <h:column>
+                            <f:facet name="header">
+                                <div align="center">
+                                    <h:outputText value="First Name"/>
+                                </div>
+                            </f:facet>
+                            <h:outputText value="#{sub.firstname}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <div align="center">
+                                    <h:outputText value="Last Name"/>
+                                </div>
+                            </f:facet>
+                            <h:outputText value="#{sub.lastname}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <div align="center">
+                                    <h:outputText value="Email"/>
+                                </div>
+                            </f:facet>
+                            <h:outputText value="#{sub.email}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <div align="center">
+                                    <h:outputText value="Actions"/>
+                                </div>
+                            </f:facet>
+                            <div class="row middle">
+                                <div class="col s3">
+                                    <!--ajax function isn't working well here. Remember to fix that.-->
+                                    <h:form id="f1" rendered="#{sub.isActive()}">
+                                        <h:commandLink id="btnactive" styleClass="btn btn-default teal z-depth-2">
+                                            <f:ajax execute="btnactive" event="click" render="btnactive" listener="#{userBean.setActive(false,sub)}"/>
+                                            active
+                                        </h:commandLink>
+                                    </h:form>
+                                    <h:form id="f2" rendered="#{!sub.isActive()}">
+                                        <h:commandLink id="btninactive" styleClass="btn btn-default grey z-depth-2 lighten-1">
+                                            <f:ajax execute="btninactive" event="click" listener="#{userBean.setActive(true,sub)}" render="btninactive" />
+                                            inactive
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                                <div class="col s2"></div>
+                                <div class="col s2">
+                                    <h:form>
+                                        <h:commandLink id="btnedit"
+                                                       action="#{userBean.transitionToEdit(sub.id)}"
+                                                       styleClass="btn btn-default teal z-depth-2">
+                                            <i class="material-icons teal-text text-darken-4">edit</i>
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                                <div class="col s2"></div>
+                                <div class="col s2">
+                                    <h:form>
+                                        <h:commandLink id="btndelete"
+                                                       action="#{userBean.delete()}"
+                                                       styleClass="btn btn-default teal z-depth-2">
+                                            <i class="material-icons teal-text text-darken-4">delete</i>
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+
+                    <a href="#modal3" class="btn-floating btn-large btn modal-trigger waves-effect waves-light right pink darken-4"><i class="material-icons">add</i></a>
+                    <!-- Modal Structure -->
+                    <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <h5>Create New User</h5>
+                            <div class="row">
+                                <h:form styleClass="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="firstname" value="#{userBean.firstname}" required="true" requiredMessage="Firstname is required!" />
+                                            <h:outputLabel for="firstname" value="Firstname"/>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <h:inputText id="lastname" value="#{userBean.lastname}" required="true" requiredMessage="Lastname is required!" />
+                                            <h:outputLabel for="lastname" value="Lastname"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="username" value="#{userBean.username}" required="true" requiredMessage="Username is required!" />
+                                            <h:outputLabel for="username" value="Username"/>
+
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <h:selectOneMenu>
+                                                <f:selectItem itemLabel="Select" itemValue="0" />
+                                                <f:selectItem itemLabel="#{userBean.USERGROUP1}" itemValue="#{userBean.setUserGroup(1)}" />
+                                                <f:selectItem itemLabel="#{userBean.USERGROUP2}" itemValue="#{userBean.setUserGroup(2)}" />
+                                                <f:selectItem itemLabel="#{userBean.USERGROUP3}" itemValue="#{userBean.setUserGroup(3)}" />
+                                            </h:selectOneMenu>
+                                            <label>User Group</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <p:password id="password" value="#{userBean.password}" label="Password" required="true" />
+                                            <h:outputLabel for="password" value="Password" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+
+                                            <h:inputText id="email" value="#{userBean.email}" p:type="email" label="Email" required="true"/>
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <h:commandButton styleClass='btn pink darken-4 right' value="Create" action="#{userBean.create()}" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            $('.modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+//                    alert("Ready");
+                    console.log(modal, trigger);
+                }
+//                complete: function () {
+//                    alert('Closed');
+//                } // Callback for Modal close
+            }
+            );
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
+    </h:body>
+</html>
+
+

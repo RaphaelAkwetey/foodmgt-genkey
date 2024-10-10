@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <h:head>
+        <title>User Settings</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body>
+        <ui:param name="user" value="#{userBean.find(userBean.id)}"/>
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div class="row">
+            <div class="col s2 grey lighten-2" style="margin-top: 10px; width: 16.5%;min-height: 88vh">
+                <!-- Grey navigation panel -->
+                <br/>
+                <div class="row">
+
+                    <!--<div class="col s3">-->
+                    <h:form>
+                        <h:commandLink id="btnback" action="adminusers.xhtml">
+                            <div class="card-panel blue-grey darken-1">
+                                <h5 class="white-text center-align"><i class="material-icons white-text">arrow_back</i>  back</h5>
+                            </div>
+                        </h:commandLink>
+                    </h:form>
+
+                    <div class="card-panel blue-grey darken-1 z-depth-4">
+                        <div class="row valign-wrapper">
+                            <div class="col s6">
+                                <img src="https://png.icons8.com/color/1600/avatar.png" alt="" class="circle responsive-img"/> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s6">
+                                <span class="white-text">
+                                    Admin
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col s10 card teal lighten-2" style="width:83%;float:right;min-height: 88vh;">
+                <!-- Teal page content  -->
+                <br/>
+
+                <div class="container">
+                    <div class="row">
+
+                    </div>
+
+                    <div class="row col s10 card z-depth-4" style="height:700px">
+                        <div class="row"></div>
+                        <h3>Edit User</h3>
+                        <h:form styleClass="col s12">
+                            <span class="helper-text" data-error="#{userBean.getErrorMsg()}" data-success="right"></span>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <h:inputText id="firstname" value="#{user.firstname}" required="true" requiredMessage="Firstname is required!" />
+                                    <h:outputLabel for="firstname" value="Firstname"/>
+                                </div>
+                                <div class="input-field col s6">
+                                    <h:inputText id="lastname" value="#{user.lastname}" required="true" requiredMessage="Lastname is required!" />
+                                    <h:outputLabel for="lastname" value="Lastname"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <h:inputText id="username" value="#{user.username}" required="true" requiredMessage="Username is required!" />
+                                    <h:outputLabel for="username" value="Username"/>
+
+                                </div>
+                                <div class="input-field col s6">
+                                    <h:selectOneMenu>
+                                        <f:selectItem itemLabel="#{user.userGroup}" itemValue="0" />
+                                        <f:selectItem itemLabel="#{userBean.USERGROUP1}" itemValue="#{userBean.setUserGroup(1)}" />
+                                        <f:selectItem itemLabel="#{userBean.USERGROUP2}" itemValue="#{userBean.setUserGroup(2)}" />
+                                        <f:selectItem itemLabel="#{userBean.USERGROUP3}" itemValue="#{userBean.setUserGroup(3)}" />
+                                    </h:selectOneMenu>
+                                    <label>User Group</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <p:password id="password" label="Password" required="true" />
+                                    <h:outputLabel for="password" value="Password" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+
+                                    <h:inputText id="email" value="#{user.email}" p:type="email" label="Email" required="true"/>
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <h:commandButton styleClass='btn pink darken-4 right' value="Save" action="#{userBean.edit(userBean.id)}" />
+                        </h:form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <script>
+            $('.modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+//                    alert("Ready");
+                    console.log(modal, trigger);
+                }
+//                complete: function () {
+//                    alert('Closed');
+//                } // Callback for Modal close
+            }
+            );
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
+    </h:body>
+</html>
+
+

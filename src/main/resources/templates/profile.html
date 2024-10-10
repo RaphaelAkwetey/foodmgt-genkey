@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:box-shadow="http://java.sun.com/jsf/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* Googlefont Poppins CDN Link */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+
+        }
+        .nav-style{
+            background-color: #fff;
+            color: #fff;
+        }
+
+        .logo {
+            background: url("https://www.genkey.com/wp-content/themes/genkey/public/images/logo.svg")
+            no-repeat;
+            background-size: 100%;
+            display: block;
+            float: left;
+            height: 36px;
+            width: 86px;
+            margin-left: 10px;
+        }
+
+        .modal {
+            position: fixed;
+            overflow: hidden;
+        }
+        .sidebar{
+            position: absolute;
+            width: 230px;
+            margin-top: 10px;
+            background-color:  #e0e0e0 !important;;
+            transition: all 0.5s ease;
+
+        }
+        .sidebar.active{
+            width: 60px;
+        }
+        .sidebar .logo-details{
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .logo-details i{
+            font-size: 15px;
+            font-weight: 500;
+            color: #880e4f;
+            min-width: 60px;
+            margin-top: 50px;
+        }
+
+        .sidebar .nav-links{
+            margin-top: 10px;
+            background-color: white;
+            width: 190px;
+            margin-right: auto;
+            margin-left: auto;
+            box-shadow: 0px 4px 6px #75808e;
+            padding-bottom: 10px;
+        }
+        .sidebar .nav-links li{
+            position: relative;
+            list-style: none;
+            height: 50px;
+        }
+        .sidebar .nav-links li a{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar .nav-links li a:hover{
+            background: #bebcbc;
+            color: #ffffff;
+        }
+        .sidebar .nav-links li i{
+            min-width: 60px;
+            text-align: center;
+            font-size: 18px;
+            color: teal;
+        }
+        .sidebar .nav-links li a .links_name{
+            color: teal;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        sidebar .nav-links li a .links_name{
+            color: teal;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+
+        .sidebar .nav-links .log_out{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        .home-section{
+            margin-top: 10px;
+            position: relative;
+            background-color: #4db6ac;
+            min-height: 100vh;
+            width: calc(100% - 240px);
+            left: 240px;
+            transition: all 0.5s ease;
+            box-shadow: -1px 0px 3px 1px #7a7878;
+        }
+
+        .home-section .home-content{
+            position: relative;
+            padding: 40px 10px;
+        }
+
+
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+
+        .sidebar.active ~ .home-section{
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+
+        .welcomeProfileImageCircle{
+            height: 35px;
+            width: 35px;
+            border-radius: 17px;
+            margin-right: 10px;
+        }
+
+        .profile-container{
+            display: flex;
+            background-color: #546e7a !important;
+            border-radius: 2px;
+            align-items: center;
+            height:80px;
+            width: 190px;
+            margin: 20px auto 40px;
+            padding-left: 5px;
+            padding-right: 20px;
+            box-shadow: 0px 4px 6px #75808e;
+        }
+
+        .responsive-img{
+            height: 50px;
+            width: 50px;
+            border-radius: 25px;
+        }
+        .profile-details .dropdown-menu li a .links_name{
+            color: teal;
+            font-size: 15px;
+            font-weight: 200;
+            white-space: nowrap;
+        }
+
+
+        .profile-details .dropdown-menu li a .links_name{
+            color: teal;
+            white-space: nowrap;
+            text-decoration: none;
+            font-size: 15px;
+            margin-left: 10px;
+        }
+
+        nav .profile-details {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* background: #546E74; */
+            /* border-radius: 6px; */
+
+            min-width: 190px;
+        }
+        nav ul a {
+            -webkit-transition: background-color .3s;
+            transition: background-color .3s;
+            color: #fff;
+            display: block;
+            cursor: pointer;
+        }
+
+        .home-section .home-content{
+            position: relative;
+            padding-top: 20px;
+        }
+        .home-content .overview-boxes{
+            display: flex;
+            justify-content: space-between;
+            margin: 0px;
+        }
+        .box{
+            align-items: center;
+            justify-content: center;
+            width: calc(100% / 4 - 15px);
+            height: 160px;
+            background: #fff;
+            padding: 15px 14px;
+            border-radius: 5px;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+
+        .home-content .box .indicator i{
+            height: 20px;
+            width: 20px;
+            background: #8FDACB;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            color: #fff;
+            font-size:15px;
+            margin-right: 5px;
+        }
+        .sales-boxes .sales-details li{
+            list-style: none;
+            margin: 8px 0;
+        }
+        .sales-boxes .sales-details li a{
+            font-size: 18px;
+            color: #333;
+            font-size: 400px;
+            text-decoration: none;
+        }
+        .sales-boxes .box .button{
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .sales-boxes .box .button a{
+            color: #fff;
+            background: #0A2558;
+            padding: 4px 12px;
+            font-size: 15px;
+            font-weight: 400;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .sales-boxes .box .button a:hover{
+            background:  #0d3073;
+        }
+
+        /* Right box */
+        .home-content .sales-boxes .top-sales{
+            width: 35%;
+            background: #fff;
+            padding: 20px 30px;
+            margin: 0 20px 0 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .sales-boxes .top-sales li{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .sales-boxes .top-sales li a img{
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-right: 10px;
+            background: #333;
+        }
+        .sales-boxes .top-sales li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .card{
+            border-radius: 5px;padding:0px 33px 20px;box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin-bottom: 100px;
+        }
+
+        .action-button{
+            text-align: center;width: 5%
+        }
+
+        .table td, .table th {
+            padding: .75rem;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn.btn-primary {
+            background: #3e64ff !important;
+            border-color: #3e64ff !important;
+            color: #fff;
+        }
+        .btn-group > .btn, .btn-group-vertical > .btn {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+        }
+
+        h4 > strong {
+            color: #ff3f3f;
+        }
+
+        #sign:hover {
+            color: #1e2832;
+            text-shadow: 0px 0px 5px #1e2832;
+        }
+
+
+        *, *::before, *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .BootstrapCards {
+            padding-bottom: 50px;
+            margin-top: 40px;
+        }
+        .dropdown-item{
+            color: teal;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* Responsive Media Query */
+        @media (max-width: 1240px) {
+            .sidebar{
+                width: 60px;
+            }
+            .sidebar.active{
+                width: 215px;
+            }
+            .home-section{
+                width: calc(100% - 60px);
+                left: 60px;
+            }
+            .sidebar.active ~ .home-section{
+                width: calc(100% - 220px);
+                overflow: hidden;
+                left: 220px;
+            }
+            .home-section nav{
+                width: calc(100% - 60px);
+                left: 60px;
+            }
+            .sidebar.active ~ .home-section nav{
+                width: calc(100% - 220px);
+                left: 220px;
+            }
+        }
+
+
+        @media (max-width: 576px) {
+            body{
+                font-size: 15px;
+            }
+
+            nav .sidebar-button .dashboard,
+            nav .profile-details .admin_name,
+            nav .profile-details i{
+                display: none;
+            }
+            .home-section nav .profile-details{
+                height: 50px;
+                min-width: 40px;
+            }
+            .tableContainer {
+                overflow-x: auto;
+            }
+
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table th,
+            .table td {
+                padding: 0px;
+            }
+
+            .card{
+                border-radius: 5px;padding:0px 5px;box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+                margin-bottom: 100px;
+            }
+            .table th{
+                display: none;
+            }
+
+            .table .day-cell{
+                 width: 20%;
+             }
+
+            .table .food-cell{
+                width: 50%;
+            }
+
+            .table .status-cell{
+                width: 10%;
+            }
+            .table .cost-cell{
+                width: 5%;
+            }.table .date-cell{
+                 width: 25%;
+             }
+
+            .table .button-cell{
+                width: 10%;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+            }
+            .card-main{
+                font-size: 10px;
+                margin: 0px;
+                padding: 0px
+            }
+            .action-button{
+                width: 1%;
+                padding: 0px;
+            }
+            a .btn{
+                padding: 0px;
+                margin: 0px;
+            }
+        }
+
+        .pagination-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* Style for pagination */
+        ul.pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.pagination li {
+            display: inline-block;
+            margin: 10px 3px;
+        }
+
+        ul.pagination li a {
+            color: #2d2e2f;
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+
+        ul.pagination li.active a {
+            background-color: #007bff;
+            color: #fff;
+            border: 1px solid #007bff;
+        }
+
+        ul.pagination li.disabled a {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+
+    </style>
+    <title>Profile</title>
+</head>
+<body style="background-color: #fff; margin: 0px; padding: 0px">
+
+
+
+<nav class="navbarstyle " style="background-color: #880e4f;
+      color: #ffffff;display: flex;justify-content: space-between;
+       box-shadow: 0px 3px 5px #7b7f86;height: 50px">
+
+    <div style=" display: flex;margin-left: 10px;justify-content: space-around;align-items: center;margin-top: auto;margin-bottom: auto" >
+        <!--        display: flex;-->
+        <!--        justify-content: space-around;-->
+        <!--        align-items: center;-->
+        <!--        /* background: #546E74; */-->
+        <!--        /* border-radius: 6px; */-->
+
+        <!--        min-width: 190px;-->
+        <span class="sidebar-button " >
+          <i class='bx bx-menu bx-md sidebarBtn'  style="float: left; margin-right: 20px"></i>
+        </span>
+        <a class="logo" href="#"></a>
+    </div>
+
+
+    <div class="profile-details" >
+        <span class="welcomeText" style="float: right">Welcome,  </span>
+
+        <span style="margin-left: 5px" sec:authentication="principal.username"> Username</span>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle profileDropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown"  aria-expanded="false" style="background-color: transparent; border: transparent;box-shadow: none !important">
+                <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="welcomeProfileImageCircle"/>
+            </button>
+            <div class="dropdown-menu  w-5" aria-labelledby="dropdownMenuButton" style="min-width: 130px ; color: teal;
+                 position: absolute;
+                 transform: translate3d(-116px, 35px, 0px);
+                 top: 0px;
+                 left: 0px;">
+
+                <a class="dropdown-item" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" th:href="@{/admin/admindashboard}" style="margin: 0px">
+                    <i class=' bx bx-home-circle navItemIcon'></i>
+                    <span class="links_name" style="padding-left: 15px">Admin home</span>
+                </a>
+                <a class="dropdown-item" th:href="@{/}" style="margin: 0px">
+                    <i class='bx bx-food-menu navItemIcon' ></i>
+                    <span class="links_name" style="padding-left: 15px">Menu</span>
+                </a>
+                <a class="dropdown-item" th:href="@{/changePassword}" style="margin: 0px">
+                    <i class='bx bx-cog navItemIcon' ></i>
+                    <span class="links_name" style="padding-left: 15px">Setting</span>
+                </a>
+                <a class="dropdown-item" th:href="@{/logout}" style="margin: 0px">
+                    <i class='bx bx bx-log-out navItemIcon'></i>
+                    <span class="links_name" style="padding-left: 15px">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="sidebar" style="margin-right: 10px">
+
+    <div class="profile-container">
+        <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="circle responsive-img "/>
+
+        <div style="padding-left: 20px">
+            <p class="profile-container-user" style="color: white; font-size: 15px;margin-bottom: 0px;" sec:authentication="principal.username">
+                Admin
+            </p>
+            <div style="color: #fff!important; font-size: 12px;" th:text="${role}">Senior dev</div>
+        </div>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a >
+                <i class="bx bx-grid-alt"></i>
+                <span class="links_name"  th:text="'Cap: ₵' + ${meta1}">Cap :</span>
+            </a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''NSS'')')}">
+            <a >
+                <i class='bx bx-list-ul' ></i>
+                <span class="links_name"  th:text="'Credit: ₵' + ${meta2}">Credit :</span>
+            </a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''NSS'')')}">
+            <a>
+                <i class='bx bx-box' ></i>
+                <span class="links_name" th:text="'Monthly-S: ₵' + ${MonthlySpending}" >Monthly</br> Spending :</span>
+            </a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''INTERN'')')}">
+            <a>
+                <i class='bx bx-box' ></i>
+                <span class="links_name" th:text="'Monthly-S: ₵' + ${MonthlySpending}" >Monthly</br> Spending :</span>
+            </a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''USER'')')}">
+            <a>
+                <i class='bx bx-box' ></i>
+                <span class="links_name" th:text="'Monthly-S: ₵' + ${Msalary}" >Monthly</br> Spending :</span>
+            </a>
+        </li>
+        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <a>
+                <i class='bx bx-box' ></i>
+                <span class="links_name" th:text="'Monthly-S: ₵' + ${Msalary}" >Monthly</br> Spending :</span>
+            </a>
+        </li>
+
+        <!--        <li class="log_out">-->
+        <!--            <a th:href="@{/greeting}">-->
+        <!--                <i class='bx bx-log-out'></i>-->
+        <!--                <span class="links_name">Log out</span>-->
+        <!--            </a>-->
+        <!--        </li>-->
+    </ul>
+</div>
+<section class="home-section">
+    <div class="home-content">
+        <div class="container-fluid">
+            <div class="row"  >
+                <div class="col-md-12 card-main">
+                    <div class="card">
+                        <div class="card-content transactionCard">
+                            <h4 style="margin: 1.14rem 0 .912rem 0;margin-bottom: 20px" >Pending Orders</h4>
+
+                            <div class="tableContainer">
+                                <table class="table" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 15%">Day</th>
+                                        <th scope="col" style="width: 20%">Menu item </th>
+                                        <th scope="col" class="text-center" style="width: 25%">Status</th>
+                                        <th style="width: 40%;" colspan="2" scope="col" class="text-center">Actions</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tr  th:each="userSpecifics : ${userSpecific}">
+                                        <td class="day-cell" th:text="${userSpecifics.transactionShorterDate}">Monday</td>
+                                        <td class="food-cell"th:text="${userSpecifics.food}">Fried plantain and beans stew</td>
+                                        <td class="status-cell" style=" text-align: center;vertical-align: middle"><span style="background-color: #ffc233;padding:5px 5px ; border-radius: 50px; margin-top: 12px;"  th:text="${userSpecifics.status}">Status</span></td>
+                                        <td class="text-center action-button status-cell" > <a th:href="@{'/editOrder/' + ${userSpecifics.id}}"  class="modal-trigger " style="color: #880e4f;"><span><i class="material-icons ">edit</i></span></a></td>
+                                        <td class="text-center action-button status-cell" >  <a th:href="@{'/deleteOrder/' + ${userSpecifics.id}}" id="btnDelete" class="modal-trigge " style="color: #880e4f;"><span><i class="material-icons ">delete</i></span></a></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- <div style="height: 40px; padding-top: 30px">
+                                 <outputLabel class="col s1 white-text"  value="Food:"></outputLabel>
+                                 <outputlabel class="col s6 white-text" value="Price:"></outputlabel>
+                             </div><br/><br/>-->
+                            <!--  <p><a href="#" class='col s1'><outputLabel class='btn btn-small' for="edit" value="Edit">edit</outputLabel></a>
+                                  <a href="#" class='col s1'><outputLabel class='btn btn-small' for="delete" value="Delete">delete</outputLabel></a></p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card-main">
+            <div class="card" style="background-color: transparent; box-shadow: none; border: none;">
+                <div class="card-content">
+                    <h4 style="line-height: 110%; margin: 30px 10px;">Order History</h4>
+                    <div class="tableContainer">
+                        <table class="table" style="width: 100%; padding: 0px 40px;">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="width: 22%">Day</th>
+                                <th scope="col" style="width: 43%">Menu item</th>
+                                <th scope="col" style="width: 15%">Price</th>
+                                <th scope="col" style="width: 25%; text-align: center">Date and Time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="userSpecific : ${userSpecifics.content}">
+                                <td class="day-cell" th:text="${userSpecific.transactionShorterDate}">Monday</td>
+                                <td class="food-cell" th:text="${userSpecific.food}">Special yam with beef kontomire</td>
+                                <td class="cost-cell" th:text="${userSpecific.cost}">30.0</td>
+                                <td class="date-cell" th:text="${userSpecific.created}" style="text-align: center">2023-05-03 16:36:22.893</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <!-- Pagination -->
+                    <!-- Pagination -->
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <ul class="pagination">
+                            <li th:class="${userSpecifics.first} ? 'disabled'"><a th:href="@{|/profile?page=0|}">First</a></li>
+                            <li th:class="${userSpecifics.hasPrevious} ? ''"><a th:href="@{|/profile?page=${userSpecifics.number - 1}|}">Previous</a></li>
+                            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber == userSpecifics.number} ? 'active'">
+                                <a th:href="@{|/profile?page=${pageNumber}|}" th:text="${pageNumber + 1}"></a>
+                            </li>
+                            <li th:class="${userSpecifics.hasNext} ? ''"><a th:href="@{|/profile?page=${userSpecifics.number + 1}|}">Next</a></li>
+                            <li th:class="${userSpecifics.last} ? 'disabled'"><a th:href="@{|/profile?page=${totalPages - 1}|}">Last</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</section>
+</div>
+
+
+<!--            //Delete modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this order?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-primary" id="delRef">Yes, Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+        type="text/javascript"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+
+    //Function for height of sidebar
+    var height = $('.home-section').height()
+    $('.sidebar').height(height)
+
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function() {
+        sidebar.classList.toggle("active");
+        if(sidebar.classList.contains("box-menu")){
+            sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+        }else
+            sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+    }
+
+
+    $('document').ready(function(){
+
+        $('.table #btnDelete').on('click',function(event) {
+            event.preventDefault();
+
+            var href = $(this).attr('href');
+            $('#deleteModal #delRef').attr('href', href);
+            $('#deleteModal').modal();
+
+        });
+
+    });
+
+</script>
+
+</html>
+
+
+
+

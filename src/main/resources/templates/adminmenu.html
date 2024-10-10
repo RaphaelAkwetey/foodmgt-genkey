@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:box-shadow="http://java.sun.com/jsf/html">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+  <style>
+    /* Googlefont Poppins CDN Link */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    .nav-style {
+      background-color: #fff;
+      color: #fff;
+    }
+
+    .logo {
+      background: url("https://www.genkey.com/wp-content/themes/genkey/public/images/logo.svg") no-repeat;
+      background-size: 100%;
+      display: block;
+      float: left;
+      height: 36px;
+      width: 86px;
+      margin-left: 10px;
+    }
+
+    .modal {
+      position: fixed;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      position: absolute;
+      width: 230px;
+      margin-top: 10px;
+      background-color: #e0e0e0 !important;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar.active {
+      width: 60px;
+    }
+
+    .sidebar .logo-details {
+      height: 80px;
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar .logo-details i {
+      font-size: 28px;
+      font-weight: 500;
+      color: #880e4f;
+      min-width: 60px;
+      margin-top: 50px;
+    }
+
+    .sidebar .nav-links {
+      margin-top: 10px;
+      background-color: white;
+      width: 190px;
+      margin-right: auto;
+      margin-left: auto;
+      box-shadow: 0px 4px 6px #75808e;
+    }
+
+    .sidebar .nav-links li {
+      position: relative;
+      list-style: none;
+      height: 50px;
+    }
+
+    .sidebar .nav-links li a {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+
+    .sidebar .nav-links li a:hover {
+      background: #bebcbc;
+      color: #ffffff;
+    }
+
+    .sidebar .nav-links li i {
+      min-width: 60px;
+      text-align: center;
+      font-size: 18px;
+      color: teal;
+    }
+
+    .sidebar .nav-links li a .links_name {
+      color: teal;
+      font-size: 15px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    sidebar .nav-links li a .links_name {
+      color: teal;
+      font-size: 15px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .profile-details .dropdown-menu li a .links_name {
+      color: teal;
+      font-size: 15px;
+      font-weight: 200;
+      white-space: nowrap;
+    }
+
+    .sidebar .nav-links .log_out {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .home-section{
+      margin-top: 10px;
+      position: relative;
+      background-color: #4db6ac;
+      min-height: 100vh;
+      width: calc(100% - 240px);
+      left: 240px;
+      transition: all 0.5s ease;
+      box-shadow: -1px 0px 3px 1px #7a7878;
+    }
+
+    /* tr:nth-child(even) {
+          background-color: #f2f2f2;
+        } */
+
+    .sidebar.active ~ .home-section{
+      width: calc(100% - 60px);
+      left: 60px;
+    }
+
+    .profile-container {
+      display: flex;
+      background-color: #546e7a !important;
+      border-radius: 2px;
+      align-items: center;
+      height: 80px;
+      width: 190px;
+      margin: 20px auto 40px;
+      padding-left: 5px;
+      padding-right: 20px;
+      box-shadow: 0px 4px 6px #75808e;
+    }
+
+    .responsive-img {
+      height: 50px;
+      width: 50px;
+      border-radius: 25px;
+    }
+
+    .profile-details .dropdown-menu li a .links_name {
+      color: teal;
+      white-space: nowrap;
+      text-decoration: none;
+      font-size: 15px;
+      margin-left: 10px;
+    }
+
+    nav .profile-details {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      /* background: #546E74; */
+      /* border-radius: 6px; */
+
+      min-width: 190px;
+    }
+
+    nav ul a {
+      -webkit-transition: background-color 0.3s;
+      transition: background-color 0.3s;
+      color: #fff;
+      display: block;
+      cursor: pointer;
+    }
+
+    .welcomeProfileImageCircle {
+      height: 35px;
+      width: 35px;
+      border-radius: 17px;
+      margin-right: 10px;
+    }
+
+    .home-section .home-content {
+      position: relative;
+      padding-top: 20px;
+    }
+
+    .home-content .overview-boxes {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 0 20px;
+      margin-bottom: 26px;
+    }
+
+    .overview-boxes .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% / 4 - 15px);
+      height: 160px;
+      background: #fff;
+      padding: 15px 14px;
+      border-radius: 5px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .overview-boxes .box-topic {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .home-content .box .number {
+      display: inline-block;
+      font-size: 32px;
+      margin-top: -6px;
+      font-weight: 500;
+    }
+
+    .home-content .box .indicator {
+      display: flex;
+      align-items: center;
+    }
+
+    .home-content .box .indicator i {
+      height: 20px;
+      width: 20px;
+      background: #8fdacb;
+      line-height: 20px;
+      text-align: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      margin-right: 5px;
+    }
+
+    .box .indicator i.down {
+      background: #e87d88;
+    }
+
+    .home-content .box .indicator .text {
+      font-size: 12px;
+    }
+
+    .home-content .box .cart {
+      display: inline-block;
+      font-size: 32px;
+      height: 60px;
+      width: 60px;
+      background: #cce5ff;
+      line-height: 50px;
+      text-align: center;
+      color: #66b0ff;
+      border-radius: 12px;
+      margin: -15px 0 0 6px;
+    }
+
+    .home-content .box .cart.two {
+      color: #2bd47d;
+      background: #c0f2d8;
+    }
+
+    .home-content .box .cart.three {
+      color: #ffc233;
+      background: #ffe8b3;
+    }
+
+    .home-content .box .cart.four {
+      color: #e05260;
+      background: #f7d4d7;
+    }
+
+    .home-content .total-order {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .home-content .sales-boxes {
+      display: flex;
+      justify-content: space-between;
+      color: black;
+      /* padding: 0 20px; */
+    }
+
+    /* left box */
+    .home-content .sales-boxes .recent-sales {
+      width: 100%;
+      /*background: #fff;*/
+      padding: 20px 30px;
+      margin: 0 20px;
+      /*border-radius: 12px;*/
+      /*box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);*/
+    }
+
+    .home-content .sales-boxes .sales-details {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sales-boxes .box .title {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      /* margin-bottom: 10px; */
+    }
+
+    .sales-boxes .sales-details li.topic {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .sales-boxes .sales-details li {
+      list-style: none;
+      margin: 8px 0;
+    }
+
+    .sales-boxes .sales-details li a {
+      font-size: 18px;
+      color: #333;
+      font-size: 400px;
+      text-decoration: none;
+    }
+
+    .sales-boxes .box .button {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .sales-boxes .box .button a {
+      color: #fff;
+      background: #0a2558;
+      padding: 4px 12px;
+      font-size: 15px;
+      font-weight: 400;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .sales-boxes .box .button a:hover {
+      background: #0d3073;
+    }
+
+    /* Right box */
+    .home-content .sales-boxes .top-sales {
+      width: 35%;
+      background: #fff;
+      padding: 20px 30px;
+      margin: 0 20px 0 0;
+      border-radius: 12px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sales-boxes .top-sales li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .tableContainer{
+      min-height: 300px;
+      background-color: #fff;
+      border-radius: 5px;
+      margin: 0px 20px;
+      padding: 20px 20px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+    .tabsList{
+      margin: 0px 20px;
+    }
+
+    .sales-boxes .top-sales li a img {
+      height: 40px;
+      width: 40px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-right: 10px;
+      background: #333;
+    }
+
+    .sales-boxes .top-sales li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .sales-boxes .top-sales li .product,
+    .price {
+      font-size: 17px;
+      font-weight: 400;
+      color: #333;
+    }
+
+    /* Responsive Media Query */
+    @media (max-width: 1240px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .sidebar.active {
+        width: 215px;
+      }
+
+      .home-section {
+        width: calc(100% - 60px);
+        left: 60px;
+      }
+
+      .sidebar.active~.home-section {
+        width: calc(100% - 220px);
+        overflow: hidden;
+        left: 220px;
+      }
+
+      .home-section nav {
+        width: calc(100% - 60px);
+        left: 60px;
+      }
+
+      .sidebar.active~.home-section nav {
+        width: calc(100% - 220px);
+        left: 220px;
+      }
+    }
+
+    @media (max-width: 1150px) {
+      .home-content .sales-boxes {
+        flex-direction: column;
+      }
+
+      .home-content .sales-boxes .box {
+        width: 100%;
+        overflow-x: scroll;
+        margin-bottom: 30px;
+      }
+
+      .home-content .sales-boxes .top-sales {
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .overview-boxes .box {
+        width: calc(100% / 2 - 15px);
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      nav .sidebar-button .dashboard,
+      nav .profile-details .admin_name,
+      nav .profile-details i {
+        display: none;
+      }
+
+      .home-section nav .profile-details {
+        height: 50px;
+        min-width: 40px;
+      }
+
+      .home-content .sales-boxes .sales-details {
+        width: 560px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .overview-boxes .box {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      .sidebar.active~.home-section nav .profile-details {
+        display: none;
+      }
+    }
+
+    .btn.btn-primary {
+      background: #3e64ff !important;
+      border-color: #3e64ff !important;
+      color: #fff;
+    }
+
+    .btn-group>.btn,
+    .btn-group-vertical>.btn {
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+    }
+
+    /*just bg and body style*/
+    .container {
+      background-color: #1e2832;
+      padding-bottom: 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    #top {
+      margin-top: 20px;
+    }
+
+
+    .card-container {
+      background: #fff;
+      border-radius: 5px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .white {
+      color: white;
+    }
+
+    .imgupload {
+      color: #1e2832;
+      padding-top: 40px;
+      font-size: 7em;
+    }
+
+    #namefile {
+      color: black;
+    }
+
+    h4>strong {
+      color: #ff3f3f;
+    }
+
+    .btn-primary1 {
+      /*border-color: #ff3f3f !important;*/
+      color: #ffffff;
+      /*text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);*/
+      background-color: #880e4f !important;
+      border-color: #880e4f !important;
+      font-size: 17px;
+    }
+
+    /*these two are set to not display at start*/
+    .imgupload.ok {
+      display: none;
+      color: green;
+    }
+
+    .imgupload.stop {
+      display: none;
+      color: red;
+    }
+
+    /*this sets the actual file input to overlay our button*/
+    #fileup {
+      opacity: 0;
+      -moz-opacity: 0;
+      filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+      width: 200px;
+      cursor: pointer;
+      position: absolute;
+      left: 43%;
+      /*transform: translateX(-45%);*/
+      transform: translateY(-350%);
+      bottom: 40px;
+      height: 50px;
+      margin-bottom: 150px;
+    }
+
+    /*switch between input and not active input*/
+    #submitbtn {
+      padding: 5px 50px;
+      display: none;
+    }
+
+    #fakebtn {
+      padding: 5px 40px;
+    }
+
+    /*www.emilianocostanzo.com*/
+    #sign {
+      color: #1e2832;
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      text-shadow: 0px 0px 0px #1e2832;
+      transition: all.3s;
+    }
+
+    #sign:hover {
+      color: #1e2832;
+      text-shadow: 0px 0px 5px #1e2832;
+    }
+
+    .menu-card {
+      background-color: white;
+      margin: 18px 15px;
+      height: 100%;
+      min-height: 480px;
+      max-height: 800px;
+      border-radius: 5px;
+      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      justify-content: center;
+    }
+
+    .day-menu {
+      padding-top: 10px;
+    }
+
+    .day-menuContainer{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 80%;
+      border-bottom: 2px solid #cdcdcd;
+      padding-bottom: 10px;
+      margin-left: 20px;
+    }
+
+    .menu_day {
+      /* display: block; */
+      display: none;
+    }
+
+    .menu_id {
+      /* display: block; */
+      display: none;
+    }
+
+    .menu_food {
+      /* display: block; */
+      width: 100%;
+      font-size: 15px;
+      color: #333333;
+      text-align: left;
+      margin-left: 20px;
+      margin-bottom: 0px;
+    }
+
+    .dropdown-item {
+      color: teal;
+    }
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+    .btnContainer{
+      display: flex;
+      flex-direction: row;
+    }
+
+    .loader {
+      font-size: 0;
+      height: 30px;
+      width: 30px;
+      background: transparent;
+      border: 3px solid #ffffff;
+      border-radius: 100%;
+      border-top-color: transparent;
+      animation: animate 1s 0.4s linear infinite;
+    }
+
+    @keyframes animate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .finished {
+      font-size: 0;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      position: relative;
+      animation: special 0.1s ease-in;
+    }
+
+    @keyframes special {
+      10% {
+        transform: scale(0.8) translateY(20px);
+      }
+
+      35% {
+        transform: scale(1) translateY(0px);
+      }
+    }
+
+    .table td,
+    .table th {
+      padding: .75rem;
+      vertical-align: top;
+      border-top: none;
+    }
+
+    /*.finished:before{*/
+    /*    content: url("../static/green-tick.png");*/
+    /*    position: absolute;*/
+    /*    top: 50%;*/
+    /*    left: 50%;*/
+    /*    transform: translate(-50%,-50%);*/
+    /*}*/
+    #all_tasks {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .CardContent {
+      margin-bottom: 50px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 20px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #b1b9c3;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: '';
+      height: 30px;
+      width: 30px;
+      bottom: -5px;
+      background: #18333E;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #b1b9c3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(35px);
+      -ms-transform: translateX(35px);
+      transform: translateX(35px);
+      background: #F2F8FD;
+    }
+
+    .float{
+      display: grid;
+      width:60px;
+      height:60px;
+      right:40px;
+      background-color: #880e4f;
+      color:#FFF;
+      border-radius:50px;
+      margin: 0 auto;
+      box-shadow: 2px 2px 3px #5d5b5b;
+    }
+
+    .foodField.black {
+      color: black;
+    }
+
+    .foodField.gray.strike-through {
+      color: gray;
+      text-decoration: line-through;
+    }
+
+    .statusField.green {
+      color: green;
+    }
+
+    .statusField.red.strike-through {
+      color: red;
+      text-decoration: line-through;
+    }
+
+    .tabsContainer .nav-tabs {
+      border-bottom: 3px solid #b0b5b9;
+    }
+
+    #uploadModal .modal-content {
+      background-color: #0fafaf;
+    }
+
+    #uploadModal .modal-header {
+      border-bottom: none;
+    }
+
+    #uploadModal .modal-title {
+      color: #FFFFFF ;
+      margin-left: 20px;
+    }
+
+    .uploadMethodContainer a {
+      text-decoration: none;
+    }
+
+
+
+    .uploadMethodContainer ul {
+      background: darkorange;
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+    }
+
+    .uploadMethodContainer li {
+      color: black;
+      background: #fff;
+      display: block;
+
+      padding: 1rem;
+      position: relative;
+      text-decoration: none;
+      transition-duration: 0.5s;
+    }
+
+    li a {
+      color: #fff;
+    }
+
+    li:hover,
+    li:focus-within {
+      background: #dedede;
+      cursor: pointer;
+    }
+
+    li:focus-within a {
+      outline: none;
+    }
+
+    ul li ul {
+      background: orange;
+      visibility: hidden;
+      opacity: 0;
+      min-width: 5rem;
+      position: absolute;
+      transition: all 0.5s ease;
+      margin-top: 1rem;
+      left: 0;
+      display: none;
+    }
+
+    ul li:hover > ul,
+    ul li:focus-within > ul,
+    ul li ul:hover,
+    ul li ul:focus {
+      visibility: visible;
+      opacity: 1;
+      display: block;
+    }
+
+  </style>
+  <title>dashboard</title>
+</head>
+
+<body style="background-color: #fff; margin: 0px; padding: 0px">
+<nav class="navbarstyle" style="
+        background-color: #880e4f;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0px 3px 5px #7b7f86;
+        height: 50px;
+      ">
+  <div style="
+          display: flex;
+          margin-left: 10px;
+          justify-content: space-around;
+          align-items: center;
+          margin-top: auto;
+          margin-bottom: auto;
+        ">
+    <!--        display: flex;-->
+    <!--        justify-content: space-around;-->
+    <!--        align-items: center;-->
+    <!--        /* background: #546E74; */-->
+    <!--        /* border-radius: 6px; */-->
+
+    <!--        min-width: 190px;-->
+    <span class="sidebar-button">
+                <i class="bx bx-menu bx-md sidebarBtn" style="float: left; margin-right: 20px"></i>
+            </span>
+    <a class="logo" th:href="@{/admin/admindashboard}"></a>
+  </div>
+
+  <div class="profile-details">
+    <span class="welcomeText" style="float: right">Welcome, </span>
+
+    <span style="margin-left: 5px" sec:authentication="principal.username">
+                Username</span>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle profileDropdown" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-expanded="false" style="
+              background-color: transparent;
+              border: transparent;
+              box-shadow: none !important;
+            ">
+        <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt=""
+             class="welcomeProfileImageCircle" />
+      </button>
+      <div class="dropdown-menu w-5" aria-labelledby="dropdownMenuButton" style="
+              min-width: 130px;
+              color: teal;
+              position: absolute;
+              transform: translate3d(-116px, 35px, 0px);
+              top: 0px;
+              left: 0px;
+            ">
+        <a class="dropdown-item" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+           th:href="@{/admin/admindashboard}" style="margin: 0px">
+          <i class="bx bx-home-circle"></i>
+          <span class="links_name" style="padding-left: 15px">Admin home</span>
+        </a>
+
+        <a class="dropdown-item" th:href="@{/profile}" style="margin: 0px">
+          <i class="bx bx-user"></i>
+          <span class="links_name" style="padding-left: 15px">Profile</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/}" style="margin: 0px">
+          <i class="bx bx-food-menu"></i>
+          <span class="links_name" style="padding-left: 15px">Menu</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/logout}" style="margin: 0px">
+          <i class="bx bx bx-log-out"></i>
+          <span class="links_name" style="padding-left: 15px">Logout</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="sidebar" style="margin-right: 10px">
+  <div class="profile-container">
+    <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt=""
+         class="circle responsive-img" />
+
+    <div style="padding-left: 20px">
+      <p class="profile-container-user" style="color: white; font-size: 15px; margin-bottom: 0px"
+         sec:authentication="principal.username">
+        Admin
+      </p>
+      <div style="color: #fff !important; font-size: 12px" th:text="${role}">
+        Senior dev
+      </div>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li>
+      <a th:href="@{/admin/admindashboard}" class="active">
+        <i class="bx bx-grid-alt"></i>
+        <span class="links_name">Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminusers}">
+        <i class="bx bx-user"></i>
+        <span class="links_name">Users</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminvendors}">
+        <i class="bx bxs-user-account"></i>
+        <span class="links_name">Vendors</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminmenu}">
+        <i class="bx bx-food-menu"></i>
+        <span class="links_name">Upload Menu</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/reportcenter}">
+        <i class="bx bxs-report" style="font-size: larger"></i>
+        <span class="links_name">Report Center</span>
+      </a>
+    </li>
+
+    <!--        <li class="log_out">-->
+    <!--            <a th:href="@{/greeting}">-->
+    <!--                <i class='bx bx-log-out'></i>-->
+    <!--                <span class="links_name">Log out</span>-->
+    <!--            </a>-->
+    <!--        </li>-->
+  </ul>
+</div>
+<section class="home-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="d-sm-flex justify-content-between page-header" style="padding: 20px 20px;justify-content: space-between;width: 100%">
+        <div class="blockHeader">
+          <h2 style="color: #fff; text-shadow: 1px 1px #5d635f">
+            Menu management
+          </h2>
+          <small style="color: #464545">Create, upload a new menu</small>
+        </div>
+
+
+        <div class="btnContainer">
+          <button style="width: 150px;height: 40px; margin-right: 25px" id="btnDelete" class="btn modal-trigger btn-danger"
+                  type="submit">
+                                        <span>
+                                            <i class="bx bx-trash"
+                                               style="font-size: 20px; margin-right: 5px"></i></span>Delete menu
+          </button>
+
+          <button style="width: 170px;height: 39px;margin-right: 20px" class="btn btn-primary" id="broadcastBtn" >
+                                <span>
+                                    <i class="bx bx-upload"
+                                       style="font-size: 20px; margin-right: 5px"></i></span>Broadcast menu
+          </button>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle " type="button"
+                    data-toggle="dropdown" aria-expanded="false" style="
+              background-color: #fff;
+              color: #0c0c0b;
+              border: transparent;
+              box-shadow: none !important;
+              width: 220px;
+              cursor: pointer;
+            ">Menu upload <span><i class="bx bx-chevron-down" style="font-size: 20px; margin-right: 5px"></i></span></button>
+            <div class="dropdown-menu w-5" aria-labelledby="dropdownMenuButton" style="
+              min-width: 130px;
+              color: teal;
+              position: absolute;
+              transform: translate3d(-116px, 35px, 0px);
+              top: 0px;
+              left: 0px;
+            ">
+              <a class="dropdown-item"
+                 style="margin: 0px" th:href="@{/admin/adminCreateMenu}">
+                <i class="bx bx-pencil"></i>
+                <span class="links_name" style="padding-left: 15px">Type menu</span>
+              </a>
+
+              <a  id="uploadBtn" class="dropdown-item"  style="margin: 0px">
+                <i class="bx bx-upload"></i>
+                <span class="links_name" style="padding-left: 15px">Image/PDF upload</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    //OCR menu display-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="CardContent">
+          <div class="allCard">
+            <div class="tabsContainer">
+              <!-- Tabs navs -->
+              <ul class="nav nav-tabs nav-justified tabsList" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="ex3-tab-monday" data-toggle="tab" href="#Monday"
+                     role="tab" aria-controls="Monday" aria-selected="true">Monday</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="ex3-tab-tuesday" data-toggle="tab" href="#Tuesday"
+                     role="tab" aria-controls="Tuesday" aria-selected="false">Tuesday</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="ex3-tab-wednesday" data-toggle="tab" href="#Wednesday"
+                     role="tab" aria-controls="Wednesday" aria-selected="false">Wednesday</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="ex3-tab-thursday" data-toggle="tab" href="#Thursday"
+                     role="tab" aria-controls="Thursday" aria-selected="false">Thursday</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="ex3-tab-friday" data-toggle="tab" href="#Friday"
+                     role="tab" aria-controls="Friday" aria-selected="false">Friday</a>
+                </li>
+              </ul>
+              <!-- Tabs content -->
+              <div class="tab-content">
+                <!-- Monday tab content -->
+                <div class="tab-pane fade show active" id="Monday" role="tabpanel"
+                     aria-labelledby="ex3-tab-monday">
+                  <div class="tableContainer">
+                    <table class="table foodTable faqs" style="width: 100%">
+                      <thead>
+                      <tr>
+                        <th class="menu_day" scope="col" >Day </th>
+                        <th class="menu_id" scope="col" >Id</th>
+                        <th scope="col" style="width: 50%">Food </th>
+                        <th scope="col" style="width: 25%;text-align: center">Status</th>
+                        <th scope="col" style="width: 25%;text-align: center">Action</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="food : ${Monday}" >
+                        <td  class="menu_day"  th:text="${food.days}"></td>
+                        <td  class="menu_id" th:text="${food.id}"></td>
+                        <td  class="menu_food"  th:text="${food.food}"></td>
+                        <td  class="menu_status" style="text-align: center" th:text="${food.status}"></td>
+
+                        <td>
+                          <div class="theme_switcher">
+                            <label class="switch">
+                              <input type="checkbox" class="toggle-checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    <div style="display: flex; justify-content:space-between; vertical-align: bottom">
+                      <div id="container-Monday" style="display: flex; justify-content: left">
+                        <div class="text-center">
+                          <button class="btn btn-primary" style="width: 150px"
+                                  onclick="clearAndRemoveInputs('Monday');">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success" onclick="saveMenu('Monday')" style="width: 150px;  margin-left: 50px;">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="float" onclick="addfaqs('Monday');">
+                          <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Tuesday tab content -->
+                <div class="tab-pane fade" id="Tuesday" role="tabpanel"
+                     aria-labelledby="ex3-tab-tuesday">
+                  <div class="tableContainer">
+                    <table class="table foodTable faqs" style="width: 100%">
+                      <thead>
+                      <tr>
+                        <th class="menu_day" scope="col" >Day </th>
+                        <th class="menu_id" scope="col" >Id</th>
+                        <th scope="col" style="width: 50%">Food </th>
+                        <th scope="col" style="width: 25%;text-align: center">Status</th>
+                        <th scope="col" style="width: 25%;text-align: center">Action</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="food : ${Tuesday}" >
+                        <td  class="menu_day"  th:text="${food.days}"></td>
+                        <td  class="menu_id" th:text="${food.id}"></td>
+                        <td  class="menu_food"  th:text="${food.food}"></td>
+                        <td  class="menu_status" style="text-align: center" th:text="${food.status}"></td>
+
+                        <td>
+                          <div class="theme_switcher">
+                            <label class="switch">
+                              <input type="checkbox" class="toggle-checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    <div style="display: flex; justify-content:space-between; vertical-align: bottom">
+                      <div id="container-Tuesday" style="display: flex; justify-content: left">
+                        <div class="text-center">
+                          <button class="btn btn-primary" style="width: 150px"
+                                  onclick="clearAndRemoveInputs('Tuesday');">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success" onclick="saveMenu('Tuesday')" style="width: 150px;  margin-left: 50px;">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="float" onclick="addfaqs('Tuesday');">
+                          <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Wednesday tab content -->
+                <div class="tab-pane fade" id="Wednesday" role="tabpanel"
+                     aria-labelledby="ex3-tab-wednesday">
+                  <div class="tableContainer">
+                    <table class="table foodTable faqs" style="width: 100%">
+                      <thead>
+                      <tr>
+                        <th class="menu_day" scope="col" >Day </th>
+                        <th class="menu_id" scope="col" >Id</th>
+                        <th scope="col" style="width: 50%">Food </th>
+                        <th scope="col" style="width: 25%;text-align: center">Status</th>
+                        <th scope="col" style="width: 25%;text-align: center">Action</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="food : ${Wednesday}" >
+                        <td  class="menu_day"  th:text="${food.days}"></td>
+                        <td  class="menu_id" th:text="${food.id}"></td>
+                        <td  class="menu_food"  th:text="${food.food}"></td>
+                        <td  class="menu_status" style="text-align: center" th:text="${food.status}"></td>
+
+                        <td>
+                          <div class="theme_switcher">
+                            <label class="switch">
+                              <input type="checkbox" class="toggle-checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    <div style="display: flex; justify-content:space-between; vertical-align: bottom">
+                      <div id="container-Wednesday" style="display: flex; justify-content: left">
+                        <div class="text-center">
+                          <button class="btn btn-primary" style="width: 150px"
+                                  onclick="clearAndRemoveInputs('Wednesday');">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success" onclick="saveMenu('Wednesday')" style="width: 150px;  margin-left: 50px;">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="float" onclick="addfaqs('Wednesday');">
+                          <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Thursday tab content-->
+                <div class="tab-pane fade" id="Thursday" role="tabpanel"
+                     aria-labelledby="ex3-tab-thursday">
+                  <div class="tableContainer">
+                    <table class="table foodTable faqs" style="width: 100%">
+                      <thead>
+                      <tr>
+                        <th class="menu_day" scope="col" >Day </th>
+                        <th class="menu_id" scope="col" >Id</th>
+                        <th scope="col" style="width: 50%">Food </th>
+                        <th scope="col" style="width: 25%;text-align: center">Status</th>
+                        <th scope="col" style="width: 25%;text-align: center">Action</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="food : ${Thursday}" >
+                        <td  class="menu_day"  th:text="${food.days}"></td>
+                        <td  class="menu_id" th:text="${food.id}"></td>
+                        <td  class="menu_food"  th:text="${food.food}"></td>
+                        <td  class="menu_status" style="text-align: center" th:text="${food.status}"></td>
+
+                        <td>
+                          <div class="theme_switcher">
+                            <label class="switch">
+                              <input type="checkbox" class="toggle-checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    <div style="display: flex; justify-content:space-between; vertical-align: bottom">
+                      <div id="container-Thursday" style="display: flex; justify-content: left">
+                        <div class="text-center">
+                          <button class="btn btn-primary" style="width: 150px"
+                                  onclick="clearAndRemoveInputs('Thursday');">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success" onclick="saveMenu('Thursday')" style="width: 150px;  margin-left: 50px;">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="float" onclick="addfaqs('Thursday');">
+                          <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Friday tab content -->
+                <div class="tab-pane fade" id="Friday" role="tabpanel"
+                     aria-labelledby="ex3-tab-friday">
+                  <div class="tableContainer">
+                    <table class="table foodTable faqs" style="width: 100%">
+                      <thead>
+                      <tr>
+                        <th class="menu_day" scope="col" >Day </th>
+                        <th class="menu_id" scope="col" >Id</th>
+                        <th scope="col" style="width: 50%">Food </th>
+                        <th scope="col" style="width: 25%;text-align: center">Status</th>
+                        <th scope="col" style="width: 25%;text-align: center">Action</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="food : ${Friday}" >
+                        <td  class="menu_day"  th:text="${food.days}"></td>
+                        <td  class="menu_id" th:text="${food.id}"></td>
+                        <td  class="menu_food"  th:text="${food.food}"></td>
+                        <td  class="menu_status" style="text-align: center" th:text="${food.status}"></td>
+
+                        <td>
+                          <div class="theme_switcher">
+                            <label class="switch">
+                              <input type="checkbox" class="toggle-checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    <div style="display: flex; justify-content:space-between; vertical-align: bottom">
+                      <div style="display: flex; justify-content: left">
+                        <div id="container-Friday" class="text-center">
+                          <button class="btn btn-primary" style="width: 150px"
+                                  onclick="clearAndRemoveInputs('Friday');">
+                            Clear
+                          </button>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success" onclick="saveMenu('Friday')" style="width: 150px;  margin-left: 50px;">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="float" onclick="addfaqs('Friday');">
+                          <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="successAlertDiv" class="alert alert-success" role="alert" style="display: none;">
+          <p>Menu saved!</p>
+        </div>
+
+        <div id="dangerAlertDiv" class="alert alert-danger" role="alert"  style="display: none;">
+              No change has been made!
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!--            //File upload modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="uploadModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload file</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="upload" method="post" th:action="@{/upload}" action="/saveImage"
+              enctype="multipart/form-data" accept-charset="utf-8">
+          <div class="ro">
+            <div style="text-align: center;">
+              <div class="card-container">
+                <!--the three icons: default, ok file (img), error file (not an img)-->
+                <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
+                <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+                <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+                <!--this field changes dinamically displaying the filename we are trying to upload-->
+                <!--our custom btn which which stays under the actual one-->
+                <button type="button" id="btnup" class="btn btn-primary btn-lg"
+                        onclick="$('#fileup').trigger('click'); return false;">
+                  Select file
+                </button>
+                <input type="file" value="" name="file" id="fileup" />
+                <!--this is the actual file input, is set with opacity=0 beacause we wanna see our custom one-->
+                <!--                  <input type="file" value="" name="file" id="fileup" style="" />-->
+              </div>
+            </div>
+          </div>
+          <!--additional fields-->
+          <div class="ro">
+            <div style="text-align: center">
+              <!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
+              <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn" />
+              <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn"
+                      th:href="@{/files}">
+
+                Broadcast <i class="fa fa-minus-circle"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Menu update validation modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="updateConfirmModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm update</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to update this menu?</p>
+        <div id="noMenuAlertDiv" class="alert alert-danger" role="alert" style="display: none;">
+          <p>Please make an edit to broadcast!</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+
+        <button style="width: 150px" id="updateRef" class="btn btn-success"
+                onclick="sendUpdatedMenuOnClick()">
+                                        <span >
+                                          <i class="bx bx-upload" style="font-size: 20px; margin-right: 5px"></i>
+                                        </span>Yes, Update
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--            //Delete modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this menu?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <form th:action="@{/KillSwitch}" method="post">
+          <th>
+            <button style="width: 150px" id="delRef" class="btn btn-danger"
+                    type="submit">
+                                        <span>
+                                            <i class="bx bx-trash"
+                                               style="font-size: 20px; margin-right: 5px"></i></span>Yes, Delete
+            </button>
+          </th>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script type='text/javascript'>var myLink = document.querySelector('a[href="#"]');
+myLink.addEventListener('click', function (e) {
+  e.preventDefault();
+});</script>
+
+<!--<script>-->
+<!--  // Function to show or hide container and buttons based on input fields-->
+<!--  function toggleContainerAndButtons(tabId) {-->
+<!--    var tabSelector = '#' + tabId;-->
+<!--    var containerSelector = '#container-' + tabId;-->
+<!--    var inputFieldsExist = $(tabSelector + ' input[type="text"]').length > 0;-->
+
+<!--    if (inputFieldsExist) {-->
+<!--      // Show the container and buttons-->
+<!--      $(containerSelector).show();-->
+<!--    } else {-->
+<!--      // Hide the container and buttons-->
+<!--      $(containerSelector).hide();-->
+<!--    }-->
+<!--  }-->
+
+<!--  // Call the function for each tab on document ready-->
+<!--  $(document).ready(function() {-->
+<!--    // Define an array of tab IDs-->
+<!--    var tabIds = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday'/* Add more tab IDs as needed */];-->
+
+<!--    // Loop through the tab IDs and call the function for each-->
+<!--    tabIds.forEach(function(tabId) {-->
+<!--      toggleContainerAndButtons(tabId);-->
+<!--    });-->
+<!--  });-->
+
+<!--  // Your code for adding input fields and other functionality...-->
+<!--</script>-->
+
+
+
+
+
+<script>
+  //Function for sidebar height
+  var height = $('.home-section').height()
+  $('.sidebar').height(height)
+
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".sidebarBtn");
+  sidebarBtn.onclick = function() {
+    sidebar.classList.toggle("active");
+    if(sidebar.classList.contains("box-menu")){
+      sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+    }else
+      sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var elems = document.querySelectorAll(".fixed-action-btn");
+    var instances = M.FloatingActionButton.init(elems, options);
+  });
+
+  $("#fileup").change(function () {
+    //here we take the file extension and set an array of valid extensions
+    var res = $("#fileup").val();
+    var arr = res.split("\\");
+    var filename = arr.slice(-1)[0];
+    filextension = filename.split(".");
+    filext = "." + filextension.slice(-1)[0];
+    valid = [".jpg", ".png", ".jpeg", ".bmp", ".pdf"];
+    //if file is not valid we show the error icon, the red alert, and hide the submit button
+    if (valid.indexOf(filext.toLowerCase()) == -1) {
+      $(".imgupload").hide("slow");
+      $(".imgupload.ok").hide("slow");
+      $(".imgupload.stop").show("slow");
+
+      $("#namefile").css({ color: "red", "font-weight": 700 });
+      $("#namefile").html("File " + filename + " is not  pic!");
+
+      $("#submitbtn").hide();
+      $("#fakebtn").show();
+    } else {
+      //if file is valid we show the green alert and show the valid submit
+      $(".imgupload").hide("slow");
+      $(".imgupload.stop").hide("slow");
+      $(".imgupload.ok").show("slow");
+
+      $("#namefile").css({ color: "green", "font-weight": 700 });
+      $("#namefile").html(filename);
+
+      $("#submitbtn").show();
+      $("#fakebtn").hide();
+    }
+  });
+
+  $("form").submit(function () {
+    $("#submitbtn").hide();
+  });
+
+  //Delete modal
+  $("document").ready(function () {
+    $("#btnDelete").on("click", function (event) {
+      event.preventDefault();
+
+      var href = $(this).attr("href");
+      $("#deleteModal #delRef").attr("href", href);
+      $("#deleteModal").modal();
+    });
+  });
+
+  //Upload modal
+  $("document").ready(function () {
+    $("#uploadBtn").on("click", function (event) {
+      event.preventDefault();
+
+      var href = $(this).attr("href");
+      // $("#uploadModal #delRef").attr("href", href);
+      $("#uploadModal").modal();
+    });
+  });
+
+  //Update confirm modal
+  $("document").ready(function () {
+    $("#broadcastBtn").on("click", function (event) {
+      event.preventDefault();
+
+      var href = $(this).attr("href");
+      $("#updateConfirmModal #updateRef").attr("href", href);
+      $("#updateConfirmModal").modal();
+    });
+  });
+
+
+
+</script>
+<script>
+  //Loading spinner
+  $(document).ready(function () {
+    $(document).ready(function () {
+      $(".extract").click(function () {
+        $(this).addClass("loader");
+
+        setTimeout(function () {
+          // $('.extract').addClass("finished");
+          $(".extract").removeClass("loader");
+        }, 3500);
+
+        setTimeout(function () {
+          // $('.extract').removeClass("finished");
+          $(".extract").removeClass("loader");
+        }, 6500);
+      });
+    });
+  });
+</script>
+
+<script type='text/javascript'>
+  //Function for adding row to create menu tab
+  var faqs_row = 0;
+  function addfaqs(tabId) {
+    var html = '<tr id="faqs-row-' + tabId + '-' + faqs_row + '">';
+    html += '<td> <input type="text" class="form-control input_text" placeholder="Meal"></td> ';
+    // html += '<td class="mt-10"><button class="badge badge-danger" onclick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></td>';
+
+    html += '</tr>';
+
+    $("#" + tabId + " tbody").append(html);
+
+    // Call the function to show/hide container and buttons
+    toggleContainerAndButtons(tabId);
+
+    faqs_row++;
+  }
+  // Function for adding row in input modal
+  var input_row = 0;
+  function addField() {
+    var randomId = generateRandomId();
+
+    var html = '<div class="meal_container" id="' + randomId + '">';
+    html += '<input id="input-row-' + input_row + '" type="text" class="form-control input_text" placeholder="Enter food">';
+    html += '</div>';
+
+    $('.edit-container').append(html);
+
+    input_row++;
+  }
+
+
+
+
+  function generateRandomId() {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let randomId = '';
+    for (let i = 0; i < 36; i++) { // Change the loop count to match the desired length
+      if (i === 8 || i === 13 || i === 18 || i === 23) {
+        randomId += '-'; // Add hyphens at specific positions
+      } else {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomId += characters.charAt(randomIndex);
+      }
+    }
+    return randomId;
+  }
+</script>
+
+<script>
+
+  // Function that clears the input fields and removes added input fields
+  function clearAndRemoveInputs(tabId) {
+    var menuContainer = document.getElementById(tabId);
+
+    // Clear input fields
+    var inputFields = menuContainer.querySelectorAll(".input_text");
+    inputFields.forEach(function(input) {
+      input.value = "";
+    });
+
+    // Remove added input rows
+    var tableRows = menuContainer.querySelectorAll("tbody tr");
+    for (var i = tableRows.length - 1; i > 2; i--) {
+      menuContainer.querySelector("tbody").removeChild(tableRows[i]);
+    }
+  }
+
+
+  //Function to load the next tab
+  function loadNextTab() {
+    var activeTab = $(".tab-pane.active");
+    var nextTab = activeTab.next(".tab-pane");
+
+    if (nextTab.length > 0) {
+      activeTab.removeClass("show active");
+      nextTab.addClass("show active");
+      $('a[href="#' + nextTab.attr("id") + '"]').tab("show");
+    }
+    // prevBtn.disabled = false;
+    // prevBtn.classList.remove("disabledButton");
+
+  }
+
+
+
+  // Function to create objects from table rows and add them to the array
+  var changesMade = false; // Flag to track changes
+
+  function createMenuObjects(tabId) {
+    // Clear the updatedMenuArray before pushing new objects
+    payload = [];
+
+    var tableRows = document.querySelectorAll(`#${tabId} tbody tr`);
+
+    for (var i = 0; i < tableRows.length; i++) {
+      var row = tableRows[i];
+      var inputField = row.querySelector('.input_text');
+
+      if (inputField && inputField.value.trim() !== "") {
+        var menuObject = {
+          day: tabId,
+          food: inputField.value,
+          status: "Available"
+        };
+        payload.push(menuObject);
+        showBootstrapSuccessAlert();
+        changesMade = true; // Input field value changed
+      } else {
+        // For rows without input fields, create menu objects with other properties
+        var menuIdElement = row.querySelector('.menu_id');
+        var menuStatusElement = row.querySelector('.menu_status');
+        var foodElement = row.querySelector('.menu_food');
+
+        if (menuIdElement && menuStatusElement) {
+          var menuObject = {
+            day: tabId,
+            id: menuIdElement.textContent,
+            food: foodElement.textContent,
+            status: menuStatusElement.textContent
+          };
+          payload.push(menuObject);
+          if (menuStatusElement.textContent !== "Available") {
+            changesMade = true; // Toggle switch changed
+          }
+        }
+      }
+    }
+    return payload;
+  }
+
+
+  // Function to handle the checkbox toggle
+  function toggleStatus(checkbox) {
+    var statusCell = checkbox.closest('tr').querySelector('.menu_status');
+    if (statusCell) {
+      statusCell.textContent = checkbox.checked ? 'Available' : 'Unavailable';
+      changesMade = true; // Toggle switch changed
+    }
+  }
+
+  // Function to set toggle switch states based on initial status values
+  function setInitialToggleStates() {
+    var toggleCheckboxes = document.querySelectorAll('.toggle-checkbox');
+    toggleCheckboxes.forEach(function(checkbox) {
+      var statusCell = checkbox.closest('tr').querySelector('.menu_status');
+      if (statusCell) {
+        checkbox.checked = (statusCell.textContent === 'Available');
+      }
+    });
+  }
+
+  // Function to handle the "Save" button click
+  function saveMenu(tabId) {
+    createMenuObjects(tabId);
+    console.log(payload);
+    if (changesMade) {
+      loadNextTab();
+      showBootstrapSuccessAlert();
+      for (var pair of payload.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+    } else {
+      // No changes made, show an alert or perform any other desired action
+        showBootstrapDangerNoMenuAlert();
+    }
+  }
+
+  // Call the setInitialToggleStates function on page load
+  window.addEventListener('load', function () {
+    setInitialToggleStates();
+  });
+  //Bootstrap alert
+  function showBootstrapSuccessAlert() {
+    var successAlertDiv = document.getElementById("successAlertDiv");
+    successAlertDiv.style.display = "block"; // Show the alert
+
+    // Automatically close the alert after a second (1000 milliseconds)
+    setTimeout(function() {
+      successAlertDiv.style.display = "none"; // Hide the alert
+    }, 1000);
+  }
+
+  function showBootstrapDangerNoMenuAlert() {
+    var dangerAlertDiv = document.getElementById("noMenuAlertDiv");
+    dangerAlertDiv.style.display = "block"; // Show the alert
+
+    // Automatically close the alert after a second (1000 milliseconds)
+    setTimeout(function() {
+      dangerAlertDiv.style.display = "none"; // Hide the alert
+    }, 1000);
+  }
+
+
+  function showBootstrapDangerNoMenuAlert() {
+    var dangerAlertDiv = document.getElementById("noMenuAlertDiv");
+    dangerAlertDiv.style.display = "block"; // Show the alert
+
+    // Automatically close the alert after a second (1000 milliseconds)
+    setTimeout(function() {
+      dangerAlertDiv.style.display = "none"; // Hide the alert
+    }, 1000);
+  }
+
+
+  // // Call the saveMenu function when the "Save" button is clicked
+  // document.querySelector('.btn-success').addEventListener('click', function() {
+  //   saveMenu('Thursday'); // Change 'Thursday' to the appropriate day
+  // });
+
+  // Add event listeners to all toggle-checkbox elements
+  var toggleCheckboxes = document.querySelectorAll('.toggle-checkbox');
+  toggleCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+      toggleStatus(checkbox);
+    });
+  });
+
+
+  // Function to send the updated menu array to the server
+  function sendUpdatedMenu(payload) {
+    // Create the menu wrapper object
+    var menuWrapper = {
+      array: payload
+    };
+
+
+    if (!menuWrapper || (Array.isArray(payload) && menuWrapper.length === 0)) {
+      console.error("Payload is empty or null. Running emptyPayloadFunction.");
+      closeUpdateConfirmModal();
+      showBootstrapDangerNoMenuAlert();
+      return;
+    }
+
+
+    // Perform the AJAX request to send the updated menu to the server
+    $.ajax({
+      url: 'https://meals.genkeydev.com/editedMenu',
+      type: 'POST',
+      data: JSON.stringify(menuWrapper),
+      contentType: 'application/json',
+      success: function (response) {
+        console.log('Updated menu sent successfully');
+        console.log(response);
+        showSwal('auto-close');
+      },
+      error: function (error) {
+        console.error('Failed to send updated menu');
+        console.error(error);
+      }
+    });
+  }
+
+  $("document").ready(function () {
+    $("#fakeBtn").on("click", function (event) {
+      event.preventDefault();
+
+      // Make an AJAX request to the server with a timeout
+      $.ajax({
+        url: $(this).attr("href"), // Get the URL from the button's href attribute
+        type: "GET", // Change this to the appropriate HTTP method (e.g., GET, POST, etc.)
+        timeout: 2000, // Set the timeout to 2000 milliseconds (2 seconds)
+        success: function (data) {
+          // Check for the condition of success, e.g., data received from the server
+          if (data.success) {
+            // Show SweetAlert upon success
+            showSwal("auto-close"); // Replace with your SweetAlert configuration
+          } else {
+            // Handle the case when the server request was successful but the response indicates an error
+            console.error("Server request was successful, but an error occurred.");
+          }
+        },
+        error: function (error) {
+          if (error.statusText === "timeout") {
+            // Handle timeout error
+            console.error("Request timed out after 2 seconds.");
+          } else {
+            // Handle other AJAX request errors
+            console.error("Failed to make the server request: ", error);
+          }
+        }
+      });
+    });
+  });
+
+
+
+
+  const extractedData = createMenuObjects();
+  console.log("This is the" + extractedData);
+
+
+  // Event listener for the send request button 2
+  function sendUpdatedMenuOnClick() {
+
+    // Check if payload is empty or null
+    if (!payload || (Array.isArray(payload) && payload.length === 0)) {
+      console.error("Payload is empty or null. Running emptyPayloadFunction.");
+      showBootstrapDangerNoMenuAlert();
+    } else {
+      // Convert the payload to JSON and pass it to submitForm
+      sendUpdatedMenu(payload);
+    }
+
+  }
+
+</script>
+
+<script>
+  //Sweetalert popup
+  (function($) {
+    showSwal = function(type) {
+      'use strict';
+      if (type === 'auto-close') {
+        swal({
+          type: 'success',
+          title: 'Menu successfully updated!',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+
+        // Reload the page after a successful update
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+
+      }else{
+        swal("Error occured !");
+      }
+    }
+
+  })(jQuery);
+
+</script>
+
+
+<script type='text/javascript'>
+  var myLink = document.querySelector('a[href="#"]');
+  myLink.addEventListener('click', function (e) {
+    e.preventDefault();
+  });</script>
+
+
+</html>

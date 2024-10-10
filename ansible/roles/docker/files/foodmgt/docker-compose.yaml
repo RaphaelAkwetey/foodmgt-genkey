@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+#  Database********************************
+  foodmgtdb:
+    image: postgres:13
+    container_name: foodmgtDB
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5436:5432
+    networks:
+      - foodmgtnet
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      #     - POSTGRES_HOST_AUTH_METHOD=trust
+      #     - POSTGRESQL_ADMIN_PASSWORD=postgres
+      - POSTGRES_DB=foodmgt
+      - POSTGRES_HOST=postgres
+    restart: unless-stopped
+
+
+
+# ***********Backend Service**********
+  foodmgt:
+    # image: gkstats:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: foodmgt
+    command: sh -c  "./wait-for-it.sh foodmgtdb:5432
+      --timeout=70 --strict -- echo 'foodmgtdb is up'"
+    volumes:
+      - ./config:/app/config
+    ports:
+      - 8443:8443
+      - 8086:8443
+#    restart: unless-stopped
+#    depends_on:
+#      - foodmgtdb
+    restart: on-failure
+    networks:
+    - foodmgtnet
+
+  nginx:
+    build:
+      context: ./config/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "9449:9449"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:rw
+    depends_on:
+      - foodmgt
+    networks:
+      - foodmgtnet
+    restart: always
+
+    
+
+
+# ***********Network**********
+networks:
+  foodmgtnet:
+    driver: "bridge"
+
+
+# ***********volume**********
+volumes:
+  pgdata:
+
+
+
+
+  
+

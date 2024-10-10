@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <h:head>
+        <title>Vendor Settings</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body>
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div class="row">
+
+            <div class="col s2 grey lighten-2" style="margin-top: 10px; width: 16.5%">
+                <!-- Grey navigation panel -->
+                <br/>
+
+                <div class="row">
+                    <div class="card-panel blue-grey darken-1 z-depth-4">
+                        <div class="row valign-wrapper">
+                            <div class="col s6">
+                                <img src="https://png.icons8.com/color/1600/avatar.png" alt="" class="circle responsive-img"/> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s6">
+                                <span class="white-text">
+                                    Admin
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<br/><br/><br/><br/><br/><br/>-->
+
+                <div class="collection" style="height:100% ">
+                    <a href="admindashboard.xhtml" class="collection-item">Dashboard</a>
+                    <a href="adminusers.xhtml" class="collection-item">Users</a>
+                    <a href="adminvendors.xhtml" class="collection-item active pink darken-4">Vendors</a>
+                    <a href="adminmenu.xhtml" class="collection-item">Menus</a>
+                    <a href="reportcenter.xhtml" class="collection-item">Report Center</a>
+                </div>
+
+                <!--</div>-->
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <!--</div>-->
+
+            </div>
+
+            <div class="col s10 card teal lighten-2" style="width: 83%;float:right">
+                <!-- Teal page content  -->
+                <br/>
+
+                <div class="container">
+                    <br/><br/>
+                    <h:dataTable value="#{vendorBean.findAll()}" var="vendor"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+
+                        <h:column>
+                            <f:facet name="header">Vendor Name</f:facet>
+                            <h:outputText value="#{vendor.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Email</f:facet>
+                            <h:outputText value="#{vendor.email_addr}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Account Number</f:facet>
+                            <h:outputText value="#{vendor.account_no}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header" >Actions</f:facet>
+                            <div class="row">
+                                 #{vendorBean.reset()}
+                               #{vendorBean.setId(vendor.id)}
+                               <c:set var = "vendorContain" value = "${vendor}"/>
+                                <c:choose>
+                                    <c:when test="true">
+                                        
+                                        <div class="col s2 teal label center-align">
+                                            <span>
+                                                <a class=" white-text" href="#{vendorBean.editActive(vendorContain,false)}">Active</a>
+<!--                                                <h:commandButton id="submitButton" value="Active" action="#'{vendorBean.editActive(vendorBean.id,false)}">
+                                                    <f:param name="active" value=false />
+                                                </h:commandButton>-->
+                                            </span>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!--the Id variable isn't being passed. That's why the setActive function breaks down with a Null-pointer exception-->
+                                        <!--<div class="col s2 grey darken-1 label center-align" ><span><a class="white-text" href="#'{vendorBean.setActive(true)}">Inactive</a></span></div>-->
+                                        <div class="col s2 grey lighten-1 label center-align">
+                                            <span>
+                                                <a class=" grey-text" href="#{vendorBean.editActive(vendorBean.id,true)}">Inactive</a>
+<!--                                                <h:commandButton id="submitButton" value="Active" action="#'{vendorBean.edit}">
+                                                    <f:param name="active" value="true" />
+                                                </h:commandButton>-->
+                                            </span>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="col s2"></div>
+                                <div class="col s4"><a class="modal-trigger center-align" href="#modal4"><i class="material-icons teal-text">edit</i> </a></div>
+                                <div class="col s2"></div>
+                                <div class="col s4"><a class="modal-trigger center-align" href="#"><i class="material-icons teal-text ">delete</i> </a></div>
+                                <div class="col s2"></div>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+
+                    <!-- Modal Structure -->
+                    <div id="modal4" class="modal">
+                        <div class="modal-content">
+                            <h5>Edit Vendor</h5>
+                            <div class="row">
+                                <h:form styleClass="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="vendorname" value="#{vendorBean.name}" required="true" requiredMessage="Firstname is required!" />
+                                            <h:outputLabel for="vendorname" value="Vendor Name"/>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <h:inputText id="email" value="#{vendorBean.email_addr}" required="true" requiredMessage="Lastname is required!" />
+                                            <h:outputLabel for="email" value="Email"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <h:inputText id="accountno" value="#{vendorBean.account_no}" required="true" requiredMessage="Username is required!" />
+                                            <h:outputLabel for="accountno" value="Account Number"/>
+                                        </div>
+                                    </div>
+                                    <h:commandButton styleClass='btn pink darken-4 right' value="Save" action="#{vendorBean.edit}" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <a href="#modal3" class="btn-floating btn-large btn modal-trigger waves-effect waves-light right pink darken-4"><i class="material-icons">add</i></a>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <!-- Modal Structure -->
+                    <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <h5>Add New Vendor</h5>
+                            <div class="row">
+                                <h:form styleClass="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="vendorname" value="#{vendorBean.name}" required="true" requiredMessage="Firstname is required!" />
+                                            <h:outputLabel for="vendorname" value="Vendor Name"/>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <h:inputText id="email" value="#{vendorBean.email_addr}" required="true" requiredMessage="Lastname is required!" />
+                                            <h:outputLabel for="email" value="Email"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <h:inputText id="accountno" value="#{vendorBean.account_no}" required="true" requiredMessage="Username is required!" />
+                                            <h:outputLabel for="accountno" value="Account Number"/>
+                                        </div>
+                                    </div>
+                                    <h:commandButton styleClass='btn pink darken-4 right' value="Add" action="#{vendorBean.create()}" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                    <br/><br/><br/><br/><br/><br/>
+
+                </div>
+            </div>
+
+        </div>
+        <script>
+            $('.modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+//                    alert("Ready");
+                    console.log(modal, trigger);
+                }
+//                complete: function () {
+//                    alert('Closed');
+//                } // Callback for Modal close
+            }
+            );
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
+    </h:body>
+</html>
+
+

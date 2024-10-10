@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:box-shadow="http://java.sun.com/jsf/html">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>-->
+    <!--<title> Responsiive Admin Dashboard | CodingLab </title>-->
+    <!--    <link rel="stylesheet" href="style.css" />-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--  <link-->
+    <!--          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"-->
+    <!--          rel="stylesheet"-->
+    <!--  />-->
+    <!--  <link-->
+    <!--          rel="stylesheet"-->
+    <!--          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"-->
+    <!--  />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* Googlefont Poppins CDN Link */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .nav-style {
+            background-color: #fff;
+            color: #fff;
+        }
+
+        .logo {
+            background: url("https://www.genkey.com/wp-content/themes/genkey/public/images/logo.svg") no-repeat;
+            background-size: 100%;
+            display: block;
+            float: left;
+            height: 36px;
+            width: 86px;
+            margin-left: 10px;
+        }
+
+        .modal {
+            position: fixed;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            position: absolute;
+            width: 230px;
+            margin-top: 10px;
+            background-color: #e0e0e0 !important;
+            transition: all 0.5s ease;
+        }
+
+        .sidebar.active {
+            width: 60px;
+        }
+
+        .sidebar .logo-details {
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .logo-details i {
+            font-size: 28px;
+            font-weight: 500;
+            color: #880e4f;
+            min-width: 60px;
+            margin-top: 50px;
+        }
+
+        .sidebar .nav-links {
+            margin-top: 10px;
+            background-color: white;
+            width: 190px;
+            margin-right: auto;
+            margin-left: auto;
+            box-shadow: 0px 4px 6px #75808e;
+        }
+
+        .sidebar .nav-links li {
+            position: relative;
+            list-style: none;
+            height: 50px;
+        }
+
+        .sidebar .nav-links li a {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background: #bebcbc;
+            color: #ffffff;
+        }
+
+        .sidebar .nav-links li i {
+            min-width: 60px;
+            text-align: center;
+            font-size: 18px;
+            color: teal;
+        }
+
+        .sidebar .nav-links li a .links_name {
+            color: teal;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        sidebar .nav-links li a .links_name {
+            color: teal;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        .profile-details .dropdown-menu li a .links_name {
+            color: teal;
+            font-size: 15px;
+            font-weight: 200;
+            white-space: nowrap;
+        }
+
+        .sidebar .nav-links .log_out {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .home-section {
+            margin-top: 10px;
+            position: relative;
+            background-color: #4db6ac;
+            min-height: 100vh;
+            width: calc(100% - 240px);
+            left: 240px;
+            transition: all 0.5s ease;
+            box-shadow: -1px 0px 3px 1px #7a7878;
+        }
+
+        /* tr:nth-child(even) {
+              background-color: #f2f2f2;
+            } */
+
+        .sidebar.active~.home-section {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+
+        .profile-container {
+            display: flex;
+            background-color: #546e7a !important;
+            border-radius: 2px;
+            align-items: center;
+            height: 80px;
+            width: 190px;
+            margin: 20px auto 40px;
+            padding-left: 5px;
+            padding-right: 20px;
+            box-shadow: 0px 4px 6px #75808e;
+        }
+
+        .responsive-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 25px;
+        }
+
+        .profile-details .dropdown-menu li a .links_name {
+            color: teal;
+            white-space: nowrap;
+            text-decoration: none;
+            font-size: 15px;
+            margin-left: 10px;
+        }
+
+        nav .profile-details {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* background: #546E74; */
+            /* border-radius: 6px; */
+
+            min-width: 190px;
+        }
+
+        nav ul a {
+            -webkit-transition: background-color 0.3s;
+            transition: background-color 0.3s;
+            color: #fff;
+            display: block;
+            cursor: pointer;
+        }
+
+        .welcomeProfileImageCircle {
+            height: 35px;
+            width: 35px;
+            border-radius: 17px;
+            margin-right: 10px;
+        }
+
+        .home-section .home-content {
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .home-content .overview-boxes {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0 20px;
+            margin-bottom: 26px;
+        }
+
+        .overview-boxes .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% / 4 - 15px);
+            height: 160px;
+            background: #fff;
+            padding: 15px 14px;
+            border-radius: 5px;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .overview-boxes .box-topic {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .home-content .box .number {
+            display: inline-block;
+            font-size: 32px;
+            margin-top: -6px;
+            font-weight: 500;
+        }
+
+        .home-content .box .indicator {
+            display: flex;
+            align-items: center;
+        }
+
+        .home-content .box .indicator i {
+            height: 20px;
+            width: 20px;
+            background: #8fdacb;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .box .indicator i.down {
+            background: #e87d88;
+        }
+
+        .home-content .box .indicator .text {
+            font-size: 12px;
+        }
+
+        .home-content .box .cart {
+            display: inline-block;
+            font-size: 32px;
+            height: 60px;
+            width: 60px;
+            background: #cce5ff;
+            line-height: 50px;
+            text-align: center;
+            color: #66b0ff;
+            border-radius: 12px;
+            margin: -15px 0 0 6px;
+        }
+
+        .home-content .box .cart.two {
+            color: #2bd47d;
+            background: #c0f2d8;
+        }
+
+        .home-content .box .cart.three {
+            color: #ffc233;
+            background: #ffe8b3;
+        }
+
+        .home-content .box .cart.four {
+            color: #e05260;
+            background: #f7d4d7;
+        }
+
+        .home-content .total-order {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .home-content .sales-boxes {
+            display: flex;
+            justify-content: space-between;
+            color: black;
+            /* padding: 0 20px; */
+        }
+
+        /* left box */
+        .home-content .sales-boxes .recent-sales {
+            width: 100%;
+            /*background: #fff;*/
+            padding: 20px 30px;
+            margin: 0 20px;
+            /*border-radius: 12px;*/
+            /*box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);*/
+        }
+
+        .home-content .sales-boxes .sales-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sales-boxes .box .title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            /* margin-bottom: 10px; */
+        }
+
+        .sales-boxes .sales-details li.topic {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .sales-boxes .sales-details li {
+            list-style: none;
+            margin: 8px 0;
+        }
+
+        .sales-boxes .sales-details li a {
+            font-size: 18px;
+            color: #333;
+            font-size: 400px;
+            text-decoration: none;
+        }
+
+        .sales-boxes .box .button {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .sales-boxes .box .button a {
+            color: #fff;
+            background: #0a2558;
+            padding: 4px 12px;
+            font-size: 15px;
+            font-weight: 400;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sales-boxes .box .button a:hover {
+            background: #0d3073;
+        }
+
+        /* Right box */
+        .home-content .sales-boxes .top-sales {
+            width: 35%;
+            background: #fff;
+            padding: 20px 30px;
+            margin: 0 20px 0 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sales-boxes .top-sales li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .tableContainer{
+            background-color: #fff;
+            border-radius: 5px;
+            margin: 70px 20px;
+            padding: 20px 20px;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .sales-boxes .top-sales li a img {
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-right: 10px;
+            background: #333;
+        }
+
+        .sales-boxes .top-sales li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .sales-boxes .top-sales li .product,
+        .price {
+            font-size: 17px;
+            font-weight: 400;
+            color: #333;
+        }
+
+        /* Responsive Media Query */
+        @media (max-width: 1240px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar.active {
+                width: 215px;
+            }
+
+            .home-section {
+                width: calc(100% - 60px);
+                left: 60px;
+            }
+
+            .sidebar.active~.home-section {
+                width: calc(100% - 220px);
+                overflow: hidden;
+                left: 220px;
+            }
+
+            .home-section nav {
+                width: calc(100% - 60px);
+                left: 60px;
+            }
+
+            .sidebar.active~.home-section nav {
+                width: calc(100% - 220px);
+                left: 220px;
+            }
+        }
+
+        @media (max-width: 1150px) {
+            .home-content .sales-boxes {
+                flex-direction: column;
+            }
+
+            .home-content .sales-boxes .box {
+                width: 100%;
+                overflow-x: scroll;
+                margin-bottom: 30px;
+            }
+
+            .home-content .sales-boxes .top-sales {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .overview-boxes .box {
+                width: calc(100% / 2 - 15px);
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            nav .sidebar-button .dashboard,
+            nav .profile-details .admin_name,
+            nav .profile-details i {
+                display: none;
+            }
+
+            .home-section nav .profile-details {
+                height: 50px;
+                min-width: 40px;
+            }
+
+            .home-content .sales-boxes .sales-details {
+                width: 560px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .overview-boxes .box {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .sidebar.active~.home-section nav .profile-details {
+                display: none;
+            }
+        }
+
+        .btn.btn-primary {
+            background: #3e64ff !important;
+            border-color: #3e64ff !important;
+            color: #fff;
+        }
+
+        .btn-group>.btn,
+        .btn-group-vertical>.btn {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+        }
+
+        /*just bg and body style*/
+        .container {
+            background-color: #1e2832;
+            padding-bottom: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        #top {
+            margin-top: 20px;
+        }
+
+        .card-container {
+            background: #fff;
+            border-radius: 5px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .white {
+            color: white;
+        }
+
+        .imgupload {
+            color: #1e2832;
+            padding-top: 40px;
+            font-size: 7em;
+        }
+
+        #namefile {
+            color: black;
+        }
+
+        h4>strong {
+            color: #ff3f3f;
+        }
+
+        .btn-primary1 {
+            /*border-color: #ff3f3f !important;*/
+            color: #ffffff;
+            /*text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);*/
+            background-color: #880e4f !important;
+            border-color: #880e4f !important;
+            font-size: 17px;
+        }
+
+        /*these two are set to not display at start*/
+        .imgupload.ok {
+            display: none;
+            color: green;
+        }
+
+        .imgupload.stop {
+            display: none;
+            color: red;
+        }
+
+        /*this sets the actual file input to overlay our button*/
+        #fileup {
+            opacity: 0;
+            -moz-opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            width: 200px;
+            cursor: pointer;
+            position: absolute;
+            left: 43%;
+            /*transform: translateX(-45%);*/
+            transform: translateY(-350%);
+            bottom: 40px;
+            height: 50px;
+            margin-bottom: 150px;
+        }
+
+        /*switch between input and not active input*/
+        #submitbtn {
+            padding: 5px 50px;
+            display: none;
+        }
+
+        #fakebtn {
+            padding: 5px 40px;
+        }
+
+        /*www.emilianocostanzo.com*/
+        #sign {
+            color: #1e2832;
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            text-shadow: 0px 0px 0px #1e2832;
+            transition: all.3s;
+        }
+
+        #sign:hover {
+            color: #1e2832;
+            text-shadow: 0px 0px 5px #1e2832;
+        }
+
+        .menu-card {
+            background-color: white;
+            margin: 18px 15px;
+            height: 100%;
+            min-height: 480px;
+            max-height: 800px;
+            border-radius: 5px;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            justify-content: center;
+        }
+
+        .day-menu {
+            padding-top: 10px;
+        }
+
+        .day-menuContainer{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            border-bottom: 2px solid #cdcdcd;
+            padding-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        .menu_day {
+            /* display: block; */
+            width: 100%;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 0px;
+            text-align: left;
+        }
+
+        .menu_food {
+            /* display: block; */
+            width: 100%;
+            font-size: 15px;
+            color: #333333;
+            text-align: left;
+            margin-left: 20px;
+            margin-bottom: 0px;
+        }
+
+        .dropdown-item {
+            color: teal;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .loader {
+            font-size: 0;
+            height: 30px;
+            width: 30px;
+            background: transparent;
+            border: 3px solid #ffffff;
+            border-radius: 100%;
+            border-top-color: transparent;
+            animation: animate 1s 0.4s linear infinite;
+        }
+
+        @keyframes animate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .finished {
+            font-size: 0;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+            position: relative;
+            animation: special 0.1s ease-in;
+        }
+
+        @keyframes special {
+            10% {
+                transform: scale(0.8) translateY(20px);
+            }
+
+            35% {
+                transform: scale(1) translateY(0px);
+            }
+        }
+
+        .table td,
+        .table th {
+            padding: .75rem;
+            vertical-align: top;
+            border-top: none;
+        }
+
+        /*.finished:before{*/
+        /*    content: url("../static/green-tick.png");*/
+        /*    position: absolute;*/
+        /*    top: 50%;*/
+        /*    left: 50%;*/
+        /*    transform: translate(-50%,-50%);*/
+        /*}*/
+        #all_tasks {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .CardContent {
+            margin-bottom: 50px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #b1b9c3;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: '';
+            height: 30px;
+            width: 30px;
+            bottom: -5px;
+            background: #18333E;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #b1b9c3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(35px);
+            -ms-transform: translateX(35px);
+            transform: translateX(35px);
+            background: #F2F8FD;
+        }
+
+        .float{
+            position:fixed;
+            width:30px;
+            height:30px;
+            bottom:280px;
+            right:40px;
+            background-color: #880e4f;
+            color:#FFF;
+            border-radius:50px;
+            text-align:center;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 2px 2px 3px #5d5b5b;
+        }
+
+        .foodField.black {
+            color: black;
+        }
+
+        .foodField.gray.strike-through {
+            color: gray;
+            text-decoration: line-through;
+        }
+
+        .statusField.green {
+            color: green;
+        }
+
+        .statusField.red.strike-through {
+            color: red;
+            text-decoration: line-through;
+        }
+
+        #uploadModal .modal-content {
+            background-color: #0fafaf;
+        }
+
+        #uploadModal .modal-header {
+            border-bottom: none;
+        }
+
+        #uploadModal .modal-title {
+              color: #FFFFFF ;
+            margin-left: 20px;
+        }
+
+        .uploadMethodContainer a {
+            text-decoration: none;
+        }
+
+
+
+        .uploadMethodContainer ul {
+            background: darkorange;
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .uploadMethodContainer li {
+            color: black;
+            background: #fff;
+            display: block;
+
+            padding: 1rem;
+            position: relative;
+            text-decoration: none;
+            transition-duration: 0.5s;
+        }
+
+        li a {
+            color: #fff;
+        }
+
+        li:hover,
+        li:focus-within {
+            background: red;
+            cursor: pointer;
+        }
+
+        li:focus-within a {
+            outline: none;
+        }
+
+        ul li ul {
+            background: orange;
+            visibility: hidden;
+            opacity: 0;
+            min-width: 5rem;
+            position: absolute;
+            transition: all 0.5s ease;
+            margin-top: 1rem;
+            left: 0;
+            display: none;
+        }
+
+        ul li:hover > ul,
+        ul li:focus-within > ul,
+        ul li ul:hover,
+        ul li ul:focus {
+            visibility: visible;
+            opacity: 1;
+            display: block;
+        }
+
+    </style>
+    <title>dashboard</title>
+</head>
+
+<body style="background-color: #fff; margin: 0px; padding: 0px">
+<nav class="navbarstyle" style="
+        background-color: #880e4f;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0px 3px 5px #7b7f86;
+        height: 50px;
+      ">
+    <div style="
+          display: flex;
+          margin-left: 10px;
+          justify-content: space-around;
+          align-items: center;
+          margin-top: auto;
+          margin-bottom: auto;
+        ">
+        <!--        display: flex;-->
+        <!--        justify-content: space-around;-->
+        <!--        align-items: center;-->
+        <!--        /* background: #546E74; */-->
+        <!--        /* border-radius: 6px; */-->
+
+        <!--        min-width: 190px;-->
+        <span class="sidebar-button">
+                <i class="bx bx-menu bx-md sidebarBtn" style="float: left; margin-right: 20px"></i>
+            </span>
+        <a class="logo" th:href="@{/admin/admindashboard}"></a>
+    </div>
+
+    <div class="profile-details">
+        <span class="welcomeText" style="float: right">Welcome, </span>
+
+        <span style="margin-left: 5px" sec:authentication="principal.username">
+                Username</span>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle profileDropdown" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-expanded="false" style="
+              background-color: transparent;
+              border: transparent;
+              box-shadow: none !important;
+            ">
+                <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt=""
+                     class="welcomeProfileImageCircle" />
+            </button>
+            <div class="dropdown-menu w-5" aria-labelledby="dropdownMenuButton" style="
+              min-width: 130px;
+              color: teal;
+              position: absolute;
+              transform: translate3d(-116px, 35px, 0px);
+              top: 0px;
+              left: 0px;
+            ">
+                <a class="dropdown-item" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+                   th:href="@{/admin/admindashboard}" style="margin: 0px">
+                    <i class="bx bx-home-circle"></i>
+                    <span class="links_name" style="padding-left: 15px">Admin home</span>
+                </a>
+
+                <a class="dropdown-item" th:href="@{/profile}" style="margin: 0px">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name" style="padding-left: 15px">Profile</span>
+                </a>
+                <a class="dropdown-item" th:href="@{/}" style="margin: 0px">
+                    <i class="bx bx-food-menu"></i>
+                    <span class="links_name" style="padding-left: 15px">Menu</span>
+                </a>
+                <a class="dropdown-item" th:href="@{/logout}" style="margin: 0px">
+                    <i class="bx bx bx-log-out"></i>
+                    <span class="links_name" style="padding-left: 15px">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="sidebar" style="margin-right: 10px">
+    <div class="profile-container">
+        <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt=""
+             class="circle responsive-img" />
+
+        <div style="padding-left: 20px">
+            <p class="profile-container-user" style="color: white; font-size: 15px; margin-bottom: 0px"
+               sec:authentication="principal.username">
+                Admin
+            </p>
+            <div style="color: #fff !important; font-size: 12px" th:text="${role}">
+                Senior dev
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a th:href="@{/admin/admindashboard}" class="active">
+                <i class="bx bx-grid-alt"></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/adminusers}">
+                <i class="bx bx-user"></i>
+                <span class="links_name">Users</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/adminvendors}">
+                <i class="bx bxs-user-account"></i>
+                <span class="links_name">Vendors</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/adminmenu}">
+                <i class="bx bx-food-menu"></i>
+                <span class="links_name">Upload Menu</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/reportcenter}">
+                <i class="bx bxs-report" style="font-size: larger"></i>
+                <span class="links_name">Report Center</span>
+            </a>
+        </li>
+
+        <!--        <li class="log_out">-->
+        <!--            <a th:href="@{/greeting}">-->
+        <!--                <i class='bx bx-log-out'></i>-->
+        <!--                <span class="links_name">Log out</span>-->
+        <!--            </a>-->
+        <!--        </li>-->
+    </ul>
+</div>
+<section class="home-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-sm-flex justify-content-between page-header" style="padding: 20px 20px;justify-content: space-between;width: 100%">
+                <div class="blockHeader">
+                    <h2 style="color: #fff; text-shadow: 1px 1px #5d635f">
+                        Menu management
+                    </h2>
+                    <small style="color: #464545">Create, upload a new menu</small>
+                </div>
+
+
+                 <div class="uploadMethodDropdown">
+                     <div class="dropdown">
+                         <button class="btn btn-secondary dropdown-toggle " type="button"
+                                 data-toggle="dropdown" aria-expanded="false" style="
+              background-color: #fff;
+              color: #0c0c0b;
+              border: transparent;
+              box-shadow: none !important;
+              width: 220px;
+              cursor: pointer;
+            ">Menu upload <span><i class="bx bx-chevron-down" style="font-size: 20px; margin-right: 5px"></i></span></button>
+                         <div class="dropdown-menu w-5" aria-labelledby="dropdownMenuButton" style="
+              min-width: 130px;
+              color: teal;
+              position: absolute;
+              transform: translate3d(-116px, 35px, 0px);
+              top: 0px;
+              left: 0px;
+            ">
+                             <a class="dropdown-item"
+                                style="margin: 0px">
+                                 <i class="bx bx-pencil"></i>
+                                 <span class="links_name" style="padding-left: 15px">Type menu</span>
+                             </a>
+
+                             <a  id="uploadBtn" class="dropdown-item"  style="margin: 0px">
+                                 <i class="bx bx-upload"></i>
+                                 <span class="links_name" style="padding-left: 15px">Image/PDF upload</span>
+                             </a>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <!--    //OCR menu display-->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Create menu card -->
+                <div>
+                    <div class="tableContainer">
+                        <h1 class="cardsTitle">Users</h1>
+                        <table class="table" id="myTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Username</th>
+                                <th colspan="2" scope="colgroup"  style="text-align: center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.firstname}"></td>
+                                <td th:text="${user.lastname}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td style="text-align: center;width: 10%"> <a th:href="@{/getOne/(id=${user.id})}" class="modal-trigger waves-effect waves-light btn-flat editBtn" id="editBtn" style="color:#880e4f;"><span><i class="md material-icons">edit</i></span></a></td>
+
+                                <td style="text-align: center;width: 10%"> <a th:href="@{/delete/(id=${user.id})}" id="btnDelete" class="btn modal-trigger waves-effect waves-light btn-flat deleteBtn" style="color: #880e4f;">
+                                    <span><i class="md material-icons">delete</i></span>
+                                </a>
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <a href="#" class="float" data-toggle="modal" data-target="#UserModalCenter" >
+                            <i class="fa fa-plus my-float" style="margin-top: 23px"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Create menu card -->
+<!--                <div class="CardContent">-->
+<!--                    <div style="text-align: center">-->
+<!--                        <div class="ro">-->
+<!--                            <div style="text-align: center;">-->
+<!--                                <h1 style="color: #fff">Upload menu file</h1>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <form name="upload" method="post" th:action="@{/upload}" action="/saveImage"-->
+<!--                              enctype="multipart/form-data" accept-charset="utf-8">-->
+<!--                            <div class="ro">-->
+<!--                                <div style="text-align: center;">-->
+<!--                                    <div class="card-container">-->
+<!--                                        &lt;!&ndash;the three icons: default, ok file (img), error file (not an img)&ndash;&gt;-->
+<!--                                        <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>-->
+<!--                                        <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>-->
+<!--                                        <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>-->
+<!--                                        &lt;!&ndash;this field changes dinamically displaying the filename we are trying to upload&ndash;&gt;-->
+<!--                                        &lt;!&ndash;our custom btn which which stays under the actual one&ndash;&gt;-->
+<!--                                        <button type="button" id="btnup" class="btn btn-primary btn-lg"-->
+<!--                                                onclick="$('#fileup').trigger('click'); return false;">-->
+<!--                                            Browse-->
+<!--                                        </button>-->
+<!--                                        <input type="file" value="" name="file" id="fileup" />-->
+<!--                                        &lt;!&ndash;this is the actual file input, is set with opacity=0 beacause we wanna see our custom one&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                  <input type="file" value="" name="file" id="fileup" style="" />&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;additional fields&ndash;&gt;-->
+<!--                            <div class="ro">-->
+<!--                                <div style="text-align: center">-->
+<!--                                    &lt;!&ndash;the defauld disabled btn and the actual one shown only if the three fields are valid&ndash;&gt;-->
+<!--                                    <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn" />-->
+<!--                                    <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn"-->
+<!--                                            th:href="@{/files}">-->
+
+<!--                                        Submit <i class="fa fa-minus-circle"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Edit user modal -->
+<div class="modal fade" id="EditFoodModalCenter" tabindex="-1" role="dialog" aria-labelledby="EditFoodModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Edit day menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="put" class="editFood needs-validation" novalidate>
+                    <div class="edit-container">
+
+                    </div>
+
+
+
+                    <div class="text-center">
+                        <button class="btn btn-success" id="sendUpdatedMenuButton"
+                                style="width: 150px;  margin-left: 50px;">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+                <a href="#" class="float"  onclick="addField();">
+                    <i class="fa fa-plus my-float" style="margin-top: 7px"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--            //File upload modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="uploadModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="upload" method="post" th:action="@{/upload}" action="/saveImage"
+                      enctype="multipart/form-data" accept-charset="utf-8">
+                    <div class="ro">
+                        <div style="text-align: center;">
+                            <div class="card-container">
+                                <!--the three icons: default, ok file (img), error file (not an img)-->
+                                <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
+                                <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+                                <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+                                <!--this field changes dinamically displaying the filename we are trying to upload-->
+                                <!--our custom btn which which stays under the actual one-->
+                                <button type="button" id="btnup" class="btn btn-primary btn-lg"
+                                        onclick="$('#fileup').trigger('click'); return false;">
+                                    Select file
+                                </button>
+                                <input type="file" value="" name="file" id="fileup" />
+                                <!--this is the actual file input, is set with opacity=0 beacause we wanna see our custom one-->
+                                <!--                  <input type="file" value="" name="file" id="fileup" style="" />-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--additional fields-->
+                    <div class="ro">
+                        <div style="text-align: center">
+                            <!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
+                            <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn" />
+                            <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn"
+                                    th:href="@{/files}">
+
+                                Submit <i class="fa fa-minus-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--            //Delete modal-->
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this menu?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+                <form th:action="@{/KillSwitch}" method="post">
+                    <th>
+                        <button style="width: 150px" id="delRef" class="btn btn-danger"
+                                type="submit">
+                                        <span>
+                                            <i class="bx bx-trash"
+                                               style="font-size: 20px; margin-right: 5px"></i></span>Yes, Delete
+                        </button>
+                    </th>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script type='text/javascript'>var myLink = document.querySelector('a[href="#"]');
+myLink.addEventListener('click', function (e) {
+    e.preventDefault();
+});</script>
+
+
+<script>
+    //Function for height of sidebar
+    var height = $(".home-section").height();
+    $(".sidebar").height(height);
+
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("box-menu")) {
+            sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".fixed-action-btn");
+        var instances = M.FloatingActionButton.init(elems, options);
+    });
+
+    $("#fileup").change(function () {
+        //here we take the file extension and set an array of valid extensions
+        var res = $("#fileup").val();
+        var arr = res.split("\\");
+        var filename = arr.slice(-1)[0];
+        filextension = filename.split(".");
+        filext = "." + filextension.slice(-1)[0];
+        valid = [".jpg", ".png", ".jpeg", ".bmp", ".pdf"];
+        //if file is not valid we show the error icon, the red alert, and hide the submit button
+        if (valid.indexOf(filext.toLowerCase()) == -1) {
+            $(".imgupload").hide("slow");
+            $(".imgupload.ok").hide("slow");
+            $(".imgupload.stop").show("slow");
+
+            $("#namefile").css({ color: "red", "font-weight": 700 });
+            $("#namefile").html("File " + filename + " is not  pic!");
+
+            $("#submitbtn").hide();
+            $("#fakebtn").show();
+        } else {
+            //if file is valid we show the green alert and show the valid submit
+            $(".imgupload").hide("slow");
+            $(".imgupload.stop").hide("slow");
+            $(".imgupload.ok").show("slow");
+
+            $("#namefile").css({ color: "green", "font-weight": 700 });
+            $("#namefile").html(filename);
+
+            $("#submitbtn").show();
+            $("#fakebtn").hide();
+        }
+    });
+
+    $("form").submit(function () {
+        $("#submitbtn").hide();
+    });
+
+    //Delete modal
+    $("document").ready(function () {
+        $("#btnDelete").on("click", function (event) {
+            event.preventDefault();
+
+            var href = $(this).attr("href");
+            $("#deleteModal #delRef").attr("href", href);
+            $("#deleteModal").modal();
+        });
+    });
+
+    //Upload modal
+    $("document").ready(function () {
+        $("#uploadBtn").on("click", function (event) {
+            event.preventDefault();
+
+            var href = $(this).attr("href");
+            // $("#uploadModal #delRef").attr("href", href);
+            $("#uploadModal").modal();
+        });
+    });
+
+
+</script>
+<script>
+    //Loading spinner
+    $(document).ready(function () {
+        $(document).ready(function () {
+            $(".extract").click(function () {
+                $(this).addClass("loader");
+
+                setTimeout(function () {
+                    // $('.extract').addClass("finished");
+                    $(".extract").removeClass("loader");
+                }, 3500);
+
+                setTimeout(function () {
+                    // $('.extract').removeClass("finished");
+                    $(".extract").removeClass("loader");
+                }, 6500);
+            });
+        });
+    });
+</script>
+
+<script type='text/javascript'>
+    //Function for adding row to create menu tab
+    var faqs_row = 0;
+    function addfaqs(tabId) {
+        var html = '<tr id="faqs-row-' + tabId + '-' + faqs_row + '">';
+        html += '<td> <input type="text" class="form-control input_text" placeholder="Meal"></td> ';
+        // html += '<td class="mt-10"><button class="badge badge-danger" onclick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></td>';
+
+        html += '</tr>';
+
+        $("#" + tabId + " tbody").append(html);
+
+        faqs_row++;
+    }
+    // Function for adding row in input modal
+    var input_row = 0;
+    function addField() {
+        var randomId = generateRandomId();
+
+        var html = '<div class="meal_container" id="' + randomId + '">';
+        html += '<input id="input-row-' + input_row + '" type="text" class="form-control input_text" placeholder="Enter food">';
+        html += '</div>';
+
+        $('.edit-container').append(html);
+
+        input_row++;
+    }
+
+    function generateRandomId() {
+        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let randomId = '';
+        for (let i = 0; i < 36; i++) { // Change the loop count to match the desired length
+            if (i === 8 || i === 13 || i === 18 || i === 23) {
+                randomId += '-'; // Add hyphens at specific positions
+            } else {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                randomId += characters.charAt(randomIndex);
+            }
+        }
+        return randomId;
+    }
+</script>
+
+<script>
+
+    //Function to load the next tab
+    function loadNextTab() {
+        var activeTab = $(".tab-pane.active");
+        var nextTab = activeTab.next(".tab-pane");
+
+        if (nextTab.length > 0) {
+            activeTab.removeClass("show active");
+            nextTab.addClass("show active");
+            $('a[href="#' + nextTab.attr("id") + '"]').tab("show");
+        }
+        // prevBtn.disabled = false;
+        // prevBtn.classList.remove("disabledButton");
+
+    }
+
+    var payload = []; // Array to store the data
+
+    function saveMenu(tabId) {
+        var inputFields = document.querySelectorAll("#" + tabId + " .input_text");
+        var menuContainer = document.getElementById("menu-container-" + tabId);
+        menuContainer.innerHTML = "";
+        var hasNonEmptyInput = false;
+
+        // Update existing entries with the same tabId in the payload
+        payload = payload.filter(function (item) {
+            return item.day !== tabId;
+        });
+
+        for (var i = 0; i < inputFields.length; i++) {
+            var value = inputFields[i].value;
+            console.log(value);
+
+            if (value.trim() !== "") {
+                menuContainer.innerHTML += "<span class='menu_food'>" + value + "</span><br>" ;
+                hasNonEmptyInput = true;
+                payload.push({ day: tabId, value: value }); // Add the updated data to the payload array
+            }
+        }
+
+        if (hasNonEmptyInput) {
+            menuContainer.innerHTML = "<span class='menu_day'>" + tabId + "</span><br>" + menuContainer.innerHTML;
+        }
+
+        loadNextTab();
+        for (var pair of payload.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+        }
+    }
+
+    function handleConfirmClick() {
+        // Convert the payload to JSON and pass it to submitForm
+        submitForm(JSON.stringify(payload));
+        // Reload the page
+        location.reload();
+    }
+
+    function submitForm(payload) {
+        console.log(payload);
+
+        // Perform further processing with the payload, such as sending it in an AJAX request or performing other actions.
+        $.ajax({
+            url: ' https://meals.genkeydev.com/ManualUpload',
+            type: 'POST',
+            data: payload,
+            contentType: 'application/json',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        console.log(data);
+    }
+
+    function sendTabId(tabId) {
+        $.ajax({
+            url: "https://meals.genkeydev.com/editSingleMeal/" + tabId,
+            type: "POST",
+            success: function(response) {
+                //Pass the response
+                createDivs(response);
+                // Handle the response data
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle the error
+                console.log(error);
+            }
+        });
+    }
+
+    //Edit modal
+    $('#editBtn').on('click',function(event,tabId){
+        sendTabId(tabId);
+    });
+
+    function setToggleState(foodStatus,foodFieldValue, statusFieldValue, checkbox) {
+        checkbox.checked = (foodStatus === "available");
+        updateStatusField(foodFieldValue,statusFieldValue, checkbox.checked);
+
+        checkbox.addEventListener('change', () => {
+            updateStatusField(foodFieldValue,statusFieldValue, checkbox.checked);
+        });
+    }
+
+    function updateStatusField(statusFieldValue,foodFieldValue, isAvailable) {
+        if (isAvailable) {
+            statusFieldValue.textContent = "available";
+            // foodFieldValue.classList.add('black');
+            // foodFieldValue.classList.remove('gray', 'strike-through');
+            statusFieldValue.classList.add('green');
+            statusFieldValue.classList.remove('red');
+        } else {
+            statusFieldValue.textContent = "unavailable";
+            // foodFieldValue.classList.add('gray', 'strike-through');
+            // foodFieldValue.classList.remove('black');
+            statusFieldValue.classList.add('red',);
+            statusFieldValue.classList.remove('green');
+        }
+    }
+
+    function renderResponseInFields(responseObj) {
+        var array = responseObj.array;
+        var foodInputs = '';
+        for (var i = 0; i < array.length; i++) {
+            var foodObject = array[i];
+            var id = foodObject.id;
+            var day = foodObject.day;
+            var foodStatus = "available"; // Assuming the food status is stored in the 'status' property
+            var food = foodObject.food;
+
+            foodInputs += '<div class="meal_container" style="display: flex;justify-content: space-between">';
+            foodInputs += '<p id="' + id + 'Input" class="display: hidden"></p>';
+            foodInputs += '<p id="' + day + 'Input" class="display: hidden">' + day + '</p>';
+            foodInputs += '<p class="' + food +' ">' + food + '</p>';
+            foodInputs += '<p class="foodField">' + food + '</p>';
+            foodInputs += '<p class="statusField">' + foodStatus + '</p>';
+            foodInputs += '<div class="theme_switcher">';
+            foodInputs += '<label class="switch">';
+            foodInputs += '<input type="checkbox" class="toggle-checkbox">';
+            foodInputs += '<span class="slider round">';
+            foodInputs += '</span>';
+            foodInputs += '</label>';
+            foodInputs += '</div>';
+            foodInputs += '</div>';
+        }
+        $('.edit-container').html(foodInputs);
+
+        array.forEach((foodObject, index) => {
+            const container = document.querySelectorAll('.meal_container')[index];
+            const foodFieldValue = container.querySelector('.foodField');
+            const statusFieldValue = container.querySelector('.statusField');
+            const checkbox = container.querySelector('.toggle-checkbox');
+            setToggleState(foodStatus,foodFieldValue, statusFieldValue, checkbox);
+        });
+    }
+
+    function createDivs(response) {
+        // Parse the response as JSON
+        var responseObj = JSON.parse(response);
+
+        // Check if the response array is empty
+        if (responseObj.array.length === 0) {
+            // Handle the case when the array is empty, such as displaying a message or skipping the rendering of input fields
+            console.log("No data available");
+            return;
+        }
+
+        // Render the response in the input fields of the modal
+        renderResponseInFields(responseObj);
+        // setToggleState(foodStatus);
+
+
+        // Open the modal
+        $('#EditFoodModalCenter').modal();
+    };
+
+
+
+    // Function to send the updated menu array to the server
+    function sendUpdatedMenu(mealsDataArray) {
+        // Create the menu wrapper object
+        var menuWrapper = {
+            array: mealsDataArray
+        };
+
+        // Perform the AJAX request to send the updated menu to the server
+        $.ajax({
+            url: 'http://:8087/foodmgt/editedMenu',
+            type: 'POST',
+            data: JSON.stringify(menuWrapper),
+            contentType: 'application/json',
+            success: function (response) {
+                console.log('Updated menu sent successfully');
+                console.log(response);
+            },
+            error: function (error) {
+                console.error('Failed to send updated menu');
+                console.error(error);
+            }
+        });
+    }
+
+
+    function extractMealData() {
+        const mealContainers = document.querySelectorAll('.meal_container');
+        const mealsDataArray = [];
+
+        const firstDay = mealContainers[0].querySelector('.day').textContent; // Get the day of the first meal container
+
+        mealContainers.forEach(container => {
+            const foodInput = container.querySelector('.input_text');
+            const foodValue = foodInput.value.trim();
+
+            if (foodValue !== '') {
+                const mealData = {
+                    id: container.getAttribute('id'),
+                    food: foodValue,
+                    foodStatus: 'Available', // Assuming it's always available
+                    day: firstDay // Use the day of the first meal container
+                };
+
+                mealsDataArray.push(mealData);
+            }
+        });
+
+        return mealsDataArray;
+    }
+
+    const extractedData = extractMealData();
+    console.log(extractedData);
+
+
+    // Function to get the updated menu array from the input fields
+    function getUpdatedMenuArray() {
+        var updatedMenuArray = [];
+
+        $('.edit-container input[type="text"]').each(function () {
+            var id = $(this).attr('id').replace('Input', '');
+            var food = $(this).val();
+            var status = $(this).val();
+
+            var menuItem = {
+                id: id,
+                day: '', // You can set the day value if needed
+                food: food,
+                status: status,
+            };
+
+            updatedMenuArray.push(menuItem);
+        });
+
+        return updatedMenuArray;
+    }
+
+
+    // Event listener for the send request button 2
+    $('#sendUpdatedMenuButton').click(function () {
+        // Disable the button to prevent multiple clicks during the AJAX request
+        $(this).prop('disabled', true);
+
+        // Get the updated menu array from the input fields
+        var updatedMenuArray = extractMealData();
+
+        // Send the updated menu to the server
+        sendUpdatedMenu(updatedMenuArray);
+
+        // Reload the page
+        location.reload();
+    });
+
+</script>
+
+<script type='text/javascript'>
+    var myLink = document.querySelector('a[href="#"]');
+    myLink.addEventListener('click', function (e) {
+        e.preventDefault();
+    });</script>
+
+
+</html>

@@ -1,0 +1,43 @@
+---
+# main
+- name: Prerequisite
+  # Use the public IP if the VM is already created
+  hosts: "{{target}}"
+  strategy: linear
+  # For Ubuntu instances, the user will be `ubuntu`
+  # For Amazon LInux 2 instance, the user will be `ec2-user`
+  user: root
+  become: true
+  gather_facts: false
+
+  # vars_prompt:
+  #   - name: "username"
+  #     prompt: "Enter username to add"
+  #     private: no 
+  #   - name: "password"
+  #     prompt: "Enter password for this user"
+  #     private: yes
+  #     confirm: yes
+  #     salt_size: 7
+
+#  vars:
+#    - ansible_python_interpreter: /usr/bin/python
+#    - ansible_host_key_checking: false
+#    - ansible_stdout_callback: yaml
+
+  pre_tasks:
+    - name: 'wait 2 seconds for target connection to become reachable/usable.'
+      wait_for_connection:
+        timeout: 2
+#    - name: 'Install python for Ansible.'
+#      become: true
+#      raw: test -e /usr/bin/python3 || (yum -y update && yum install -y python3)
+#      changed_when: false
+
+  roles:
+   - docker
+ #   - upgrade-packages
+#   - firewall-rules
+   
+
+  

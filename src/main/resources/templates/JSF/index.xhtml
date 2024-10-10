@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Order Manager Login</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" type=""></script>
+
+    </h:head>
+    <h:body class="pink darken-4">
+        <div class="valign-wrapper" id="login-page">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s3"></div>
+                        <!--<div class="col s8 teal lighten-2 z-depth-4">-->
+                            <div style="margin-top:15%;margin-bottom: 5%;height: 500px" class="card col s6 teal z-depth-4   ">
+                                <div class="card-content">
+                                    <!--<img class="responsive-img" style="max-width: 84px;" src="http://vectorpage.com/uploads/2013/11/Shadow-menu-cover-vector-1.jpg"/>-->
+                                    <div class="left-align">
+                                        <h:form id="login-form">
+                                            <p:growl autoUpdate="true" /> 
+                                            <div class="row">
+                                                <h1 align="center">Welcome :)</h1>
+                                                   
+                                                <div class="card col s12 input-field" style="height: 80px;margin-top: 40px">
+                                                    <h:inputText style="margin-top: 15px" id="username" required="true" requiredMessage="Username is required!" />
+                                                    <h:outputLabel style="margin-top: 20px" for="username" value="Username"/> 
+                                                </div>
+                                                
+                                                <div class="card col s12 input-field" style="height: 80px;margin-top: 20px">
+                                                    <h:inputText style="margin-top: 15px" id="password" required="true" requiredMessage="Password is required!" />
+                                                    <h:outputLabel style="margin-top: 20px" for="password" value="Password" />
+                                                </div>
+                                                <br/><br/><br/><br/><br/>
+                                                <div class="col s12 input-field right-align">
+                                                    <h:commandLink style="margin-top: 20px" class="center-align" action="profile" value="Login" styleClass="btn btn-small teal darken-1" />
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--</div>-->
+                        <div class="col s3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/><br/><br/><br/>
+        <script>
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
+    </h:body>
+</html>
+
+

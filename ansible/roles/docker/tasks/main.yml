@@ -1,0 +1,158 @@
+---
+# Installing and configuring docker
+- name: Adding Docker repository
+  yum_repository:
+    name: Docker
+    description: Docker Repo
+    baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
+    gpgcheck: no
+  tags: 
+    - docker 
+
+- name: Installing Docker package
+  package:
+    name:  "docker-ce-20.10.9-3.el7.x86_64"
+    state: present
+- name: Starting docker service
+  service:
+    name: "docker"
+    state: started
+    enabled: yes
+  tags: 
+    - docker 
+
+- name: Add "foodmgt" user to "docker" group
+  remote_user: root
+  user:
+    name: "foodmgt"
+    group: "docker"
+    append: yes
+  tags:
+    - docker
+
+- name: Install docker-compose from official github repo
+  remote_user: root
+  get_url:
+    url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+  tags: 
+    - compose-install
+
+- name: "Copy Util file"
+  become: true
+  copy:
+    src: util.sh
+    dest: /foodmgt/
+    backup: yes
+  tags:
+    - compose
+
+
+- name: "move jar to backup folder"
+  remote_user: root
+  become: true
+  shell: |
+    cd /foodmgt/
+    chmod +x util.sh
+    sh util.sh
+  any_errors_fatal: true
+  tags:
+    - compose
+
+#- name: Remove current war file
+#  remote_user: root
+#  become: true
+#  shell: |
+#    cd /foodmgt/
+#    rm -rf *.jar
+#  any_errors_fatal: true
+#  tags:
+#    - general
+
+
+- name: Copy foodmgt folder to the root path
+  become: true
+  ansible.posix.synchronize:
+    src: foodmgt
+    dest: /
+    recursive: yes
+    checksum: yes
+    rsync_opts:
+      - "--chmod=ugo+rwX"
+  any_errors_fatal: true
+  tags:
+    - compose
+
+
+
+- name: Build and start container on test env
+  remote_user: root
+  become: true
+  shell: |
+    cd /foodmgt/
+    docker-compose down 
+    docker-compose build --no-cache foodmgt;
+    docker-compose up -d
+    sed -i 's/server\.port=.*/server\.port=8086/g' config/application.properties
+  any_errors_fatal: true
+  tags:
+    - test
+
+
+- name: Build and start container on production
+  remote_user: root
+  become: true
+  shell: |
+    cd /foodmgt/
+    chmod u+x /foodmgt/prod-healthcheck.sh
+    docker-compose stop foodmgt
+    docker-compose build  --no-cache foodmgt;
+    cat /foodmgt/config/ssl.txt >> /foodmgt/config/application.properties
+    sed -i 's/server\.port=.*/server\.port=8443/g' config/application.properties
+    docker-compose up -d foodmgt
+  any_errors_fatal: true
+  tags:
+    - prod
+
+
+#- name: Synchronize "Copy healthcheck.sh file"
+#  become: true
+#  ansible.posix.synchronize:
+#    src: backend-healthcheck.sh
+#    dest: /spire-dashboard/spire-dashboard-backend-docker/
+#  tags:
+#    - healthcheck
+
+
+- name: "Health Check"
+  remote_user: root
+  become: true
+  shell: |
+    chmod +x /foodmgt/backend-healthcheck.sh
+    sh /foodmgt/backend-healthcheck.sh
+  any_errors_fatal: true
+  tags:
+    - test
+
+
+- name: "Health Check"
+  remote_user: root
+  become: true
+  shell: |
+    bash /foodmgt/prod-healthcheck.sh
+  any_errors_fatal: true
+  tags:
+    - prod
+
+
+
+
+#- name: "move jar to backup folder"
+#  remote_user: root
+#  become: true
+#  shell: |
+#    cd /spire-dashboard/spire-dashboard-backend-docker/
+#    sh util.sh
+#  tags:
+#    - compose

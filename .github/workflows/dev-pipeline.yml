@@ -1,0 +1,27 @@
+name: dev pipeline
+on:
+  workflow_dispatch:
+
+  pull_request:
+    types: [closed]
+    branches:
+      - Development
+jobs:
+  build:
+    name: Create PR
+    #Run on Ubuntu using the latest version
+    runs-on: ubuntu-latest
+    steps:
+      #Check-out repo
+      - uses: actions/checkout@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Update testing branch
+          title: Update testing branch
+          body: Update test branch
+          base: Development
+          labels: automated-pr
+          branch: production
+#            delete-branch: false
+

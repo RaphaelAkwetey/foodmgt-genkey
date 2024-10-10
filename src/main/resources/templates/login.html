@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+            rel="stylesheet"
+    />    <style>
+        body {
+
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+/*Laptops and desktops*/
+        @media (min-width: 992px) {
+            .backgroundImage {
+                background-image: url(https://i.ibb.co/sWsFPDQ/amirali-mirhashemian-jh5-Xy-K4-Rr3-Y-unsplash-extend.jpg);
+                background-size: cover;
+            }
+            .login-form {
+                width: 100%;
+                max-width: none;
+                float: right;
+                margin-top: 0;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        /*Mobile devices*/
+        @media (max-width: 576px) {
+            .backgroundGradient {
+                background: linear-gradient(to bottom, #110629, #302054);
+            }
+        }
+/*//Tablet*/
+        @media (min-width: 577px) and (max-width: 991px) {
+            .backgroundImage {
+                background-image: url(https://res.cloudinary.com/dqfpvfch6/image/upload/v1677246874/zamve5recmhejzkgfjxv.jpg);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+        }
+
+
+    </style>
+    <title>Login Page</title>
+</head>
+<body class="backgroundGradient backgroundImage">
+<div class="container-fluid ">
+    <div class="row justify-content-end">
+        <div class="col-lg-6 col-md-12 ">
+            <div class="login-form mt-5">
+                <form style="width: 33rem;" th:action="@{/login}" method="post">
+                    <div style="padding-bottom: 180px">
+                        <img src="https://www.genkey.com/wp-content/themes/genkey/public/images/logo.svg"
+                             alt="Login image" style="object-fit: cover; object-position: left; height: 60px;width:140px">
+                    </div>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">Invalid username or
+                            password.</div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">You have been logged out.</div>
+                    </div>
+                    <div th:if="${param.reset_success}">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">Password reset successful.</div>
+                    </div>
+                    <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;color: #FFFFFF">Log in</h3>
+                    <div class="mb-3">
+                        <input style="background-color: #fff" type="text"  name="username" placeholder="User name" class="form-control form-control-lg " required />
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" placeholder="Password" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-lg btn-block" style="background-color:  #880e4f;color: #fff" >Login</button>
+                    </div>
+
+                    <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!"></a></p>
+                    <p style="font-size: large;color: #FFFFFF">Forgot your password? <a th:href="@{/forgot-password}" style="color: #880e4f">Reset here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+></script>
+<script>
+    $('.alert').alert('fade')
+</script>
+</body>
+</html>

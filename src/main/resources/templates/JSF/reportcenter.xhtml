@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Report Center</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body>
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--        <nav>
+                    <div class="nav-wrapper">
+                        <a href="#" class="brand-logo">Menu Service</a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="logout.xhtml">Logout</a></li>
+                        </ul>
+                    </div>
+                </nav>-->
+
+        <!-- Page Layout here -->
+        <div class="row">
+
+            <div class="col s2 grey lighten-2" style="margin-top: 10px; width: 16.5%">
+                <!-- Grey navigation panel -->
+                <br/>
+
+                <!--                <div class="row">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <div class="row valign-wrapper">
+                                                <div style="float: left;border: 1px solid black" class="col s2">
+                                                    <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" class="circle" style="width:30%"/>
+                                                </div>
+                                                <div>
+                                                    <span style="float: right;border: 1px solid black" class="col s10">
+                                                        Admin
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                <div class="row">
+                    <div class="card-panel blue-grey darken-1 z-depth-4">
+                        <div class="row valign-wrapper">
+                            <div class="col s6">
+                                <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="circle responsive-img"/> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s6">
+                                <span class="white-text">
+                                    Admin
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<br/><br/><br/><br/><br/><br/>-->
+                <!--                            <div class="card-content white-text">-->
+                <div class="collection" style="height:100% ">
+                    <a href="admindashboard.xhtml" class="collection-item">Dashboard</a>
+                    <a href="adminusers.xhtml" class="collection-item">Users</a>
+                    <a href="adminvendors.xhtml" class="collection-item">Vendors</a>
+                    <a href="adminmenu.xhtml" class="collection-item">Menus</a>
+                    <a href="reportcenter.xhtml" class="collection-item pink darken-4 active">Report Center</a>
+                </div>
+
+                <!--</div>-->
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+                <!--</div>-->
+
+            </div>
+
+            <div class="col s10 card teal lighten-2" style="width: 83%;float:right">
+                <!-- Teal page content  -->
+                <br/>
+                <row>
+
+                    <!--                    <div class="col s3">
+                                             Dropdown Trigger 
+                                            <a class='dropdown-button btn white black-text left-align' href='#' data-activates='dropdown1'>Select User (Default: All)<i class="material-icons">arrow_drop_down</i></a>
+                    
+                                             Dropdown Structure 
+                                            <ul id='dropdown1' class='dropdown-content'>
+                                                <li><a href="#!">John</a></li>
+                                                <li><a href="#!">Haq</a></li>
+                                                <li><a href="#!">Mac</a></li>
+                                                <li><a href="#!">Diabs</a></li>
+                                            </ul>
+                                        </div>-->
+
+                    <div class="input-field col s3">
+                        <h:form>
+                            <a class='dropdown-button btn white black-text left-align' href='#' data-activates='dropdown1'>Select User (Default: All)<i class="material-icons">arrow_drop_down</i></a>
+                        <h:selectOneMenu value="#{userBean.matchUserstoValue()}" >
+                            <f:selectItem itemLabel="Select" itemValue="0" />
+                            <f:selectItems value="#{userBean.matchUserstoValue()}" var="user" itemLabel="#{user.label}" itemValue="#{user.value}" />
+                        </h:selectOneMenu>
+                        <!--<label>User Group</label>-->
+                        </h:form>
+                    </div>
+                    <div class="col s1"></div>
+                    <div class="col s1"></div>
+                    <div class="col s1"></div>
+                    <div class="col s1"></div>
+                    <div class="col s1"><h:outputLabel for="price" value="Price:" /></div>
+                    <div class="col s1"></div>         
+                    <div class="col s3">
+                        <!-- Dropdown Trigger -->
+                        <a class='dropdown-button btn white black-text right-align' href='#' data-activates='dropdown2'>Month (Default: Current)<i class="material-icons">arrow_drop_down</i></a>
+
+                        <!-- Dropdown Structure -->
+                        <ul id='dropdown2' class='dropdown-content'>
+                            <li><a href="#!">January</a></li>
+                            <li><a href="#!">February</a></li>
+                            <li><a href="#!">March</a></li>
+                            <li><a href="#!">April</a></li>
+                        </ul>
+                    </div>
+                </row>
+                <br/><br/><br/>
+                <div class="container">
+                    <!--<div class="row">-->
+                    <!--<div class="col s12">-->
+                    <!-- Teal page content  -->
+                    <!--<div class="valign-wrapper" id="login-page">-->
+                    <!--<div class="container">-->
+                    <!--<div class="center-align">-->
+                    <div class="center-align"><h1>Completed Transactions (Month)</h1></div>
+                    <table class="highlight">
+                        <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>User Type</th>
+                                <!--<th>Actions</th>-->
+                            </tr>   
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+                                <td>Admin</td>
+
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+                                <td>Full Time</td>
+
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+                                <td>Admin</td>
+
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+                                <td>Intern</td>
+
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>@AlanJ</td>
+                                <td>AlanJ@gk.com</td>
+                                <td>Full Time</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <br/><br/><br/><br/>
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--</div>-->
+                </div>
+            </div>
+
+        </div>
+        <script>
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+            );
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+            );
+        </script>
+    </h:body>
+</html>
+
+

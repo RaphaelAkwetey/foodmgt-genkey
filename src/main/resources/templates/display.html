@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocr</title>
+</head>
+<body>
+
+<!--<p th:text="${OCR}"></p>-->
+<!--<p>...<span th:text="${OCR.length} + 'Here is todays menu'"></span>...</p>-->
+
+<!--<ul th:each="line : ${OCR}">-->
+<!--    <li th:text="${line}"></li>-->
+<!--</ul>-->
+
+<tr>
+    <th>Day</th>
+    <th>Menu Options</th>
+</tr>
+<tr th:each="mapEntry : ${OCR}">
+    <td th:text="${mapEntry.key}">keyvalue</td>
+    <td th:each="item : ${mapEntry.value}" th:text="${item}">keyvalue</td>
+</tr>
+
+</body>
+</html>

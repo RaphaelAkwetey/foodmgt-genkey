@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Order Manager Login</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body class="teal lighten-2">
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="menu.xhtml">Menu</a></li>
+                    <li><a href="profile.xhtml">Profile</a></li>
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div class="row">
+            <h1 class="center-align" >Chicken On Wheels</h1>
+            <div class="col s12">
+                <!-- Teal page content  -->
+                <div class="valign-wrapper" id="login-page">
+                    <div class="container">
+                        <div class="center-align">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <div class="center-align">
+                                                <h:form id="order-form1">
+                                                    <p:growl autoUpdate="true" /> 
+                                                    <div class="row">
+                                                        <div class="col s9 input-field">
+                                                            <h:outputLabel for="Food" value="Food:"/> 
+                                                        </div>
+                                                        <div class="col s3 input-field">    
+                                                            <h:outputLabel for="price" value="Price:" />
+                                                        </div>
+                                                        <div style="float: right">
+                                                            <!--<br></br><br></br><br></br>-->
+                                                            <h:commandLink value="Order" styleClass="btn btn-small pink darken-4" />
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <div class="center-align">
+                                                <h:form id="order-form2">
+                                                    <p:growl autoUpdate="true" /> 
+                                                    <div class="row">
+                                                        <div class="col s9 input-field">
+                                                            <h:outputLabel for="Food" value="Food:"/> 
+                                                        </div>
+                                                        <div class="col s3 input-field">    
+                                                            <h:outputLabel for="price" value="Price:" />
+                                                        </div>
+                                                        <div style="float: right">
+                                                            <!--<br></br><br></br><br></br>-->
+                                                            <h:commandLink value="Order" styleClass="btn btn-small pink darken-4" />
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <div class="center-align">
+                                                <h:form id="order-form3">
+                                                    <p:growl autoUpdate="true" /> 
+                                                    <div class="row">
+                                                        <div class="col s9 input-field">
+                                                            <h:outputLabel for="Food" value="Food:"/> 
+                                                        </div>
+                                                        <div class="col s3 input-field">    
+                                                            <h:outputLabel for="price" value="Price:" />
+                                                        </div>
+                                                        <div style="float: right">
+                                                            <!--<br></br><br></br><br></br>-->
+                                                            <h:commandLink value="Order" styleClass="btn btn-small pink darken-4"/>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            $(document).on("ready", function () {
+                $('#login-page').css({'heigh': window.innerHeight + 'px'});
+            });
+        </script>
+    </h:body>
+</html>
+
+

@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Menu Settings</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"></link>
+        <!--Import materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" type=""></script>
+
+    </h:head>
+    <h:body>
+        <!-- Navbar goes here -->
+        <nav>
+            <div class="nav-wrapper pink darken-4">
+                <a href="#" class="brand-logo" style="padding-left: 10px" >Menu Service</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="logout.xhtml">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div class="row">
+
+            <div class="col s2 grey lighten-2" style="margin-top: 10px; width: 16.5%">
+                <!-- Grey navigation panel -->
+                <br/>
+                <div class="row">
+                    <div class="card-panel blue-grey darken-1 z-depth-4">
+                        <div class="row valign-wrapper">
+                            <div class="col s6">
+                                <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="circle responsive-img"/> <!-- notice the "circle" class -->
+                            </div>
+                            <div class="col s6">
+                                <span class="white-text">
+                                    Admin
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<br/><br/><br/><br/><br/><br/>-->
+                <!--                            <div class="card-content white-text">-->
+                <div class="collection" style="height:100% ">
+                    <a href="admindashboard.xhtml" class="collection-item">Dashboard</a>
+                    <a href="adminusers.xhtml" class="collection-item">Users</a>
+                    <a href="adminvendors.xhtml" class="collection-item">Vendors</a>
+                    <a href="adminfood.xhtml" class="collection-item active pink darken-4">Menus</a>
+                    <a href="reportcenter.xhtml" class="collection-item">Report Center</a>
+                </div>
+
+                <!--</div>-->
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+                <!--</div>-->
+
+            </div>
+            <div class="col s10 card teal lighten-2" style="width: 83%;float:right">
+                <!-- Teal page content  -->
+                <br/> <br/>
+                <div class="container">
+                    <!--<div class="row">-->
+                    <h3 class="center-align" >#{vendorBean.activeVendor.name}</h3>
+                    #{menuBean.setVendor(vendorBean.activeVendor)}
+                    <br/><br/>
+
+                    <h:dataTable value="#{vendorBean.getActiveVendorMenu()}" rendered="#{!vendorBean.isNull()}" var="menuItem"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header">Food</f:facet>
+                            <h:outputText value="#{menuItem.food}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Cost</f:facet>
+                            <h:outputText value="#{menuItem.cost}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header" >Actions</f:facet>
+                            <div class="row">
+                                <c:choose>
+                                    <c:when test="#{menuItem.isActive}">
+                                        <div class="col s2 teal label center-align"><span><a class="modal-trigger white-text" href="#">Active</a></span></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col s2 pink lighten-2 label center-align" ><span><a class="modal-trigger white-text" href="#">Inactive</a></span></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="col s2"></div>
+                                <div class="col s4"><a class="modal-trigger center-align" href="#modal4"><i class="material-icons teal-text">edit</i> </a></div>
+                                <div class="col s4"><a class="modal-trigger center-align" href="#"><i class="material-icons teal-text ">delete</i> </a></div>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+
+                    <h3 class="center-align" >No menu available. Add a new menu item</h3>
+
+                    <a href="#modal3" class="btn-floating btn-large btn modal-trigger waves-effect waves-light right pink darken-4"><i class="material-icons">add</i></a>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <!-- Modal Structure -->
+                    <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <h5>Add Menu Item</h5>
+                            <div class="row">
+                                <h:form styleClass="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="food" value="#{menuBean.food}" required="true" requiredMessage="Food is required!" />
+                                            <h:outputLabel for="food" value="Food"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <h:inputText id="price" value="#{menuBean.cost}" required="true" requiredMessage="Price is required!" />
+                                            <h:outputLabel for="price" value="Price"/>
+
+                                        </div>
+                                    </div>
+                                    <!--
+                                    #'{menuBean.setVendor(vendorBean.findById())}
+                                    instead, pass a vendor id to the create function because an active vendor has been stored to the
+                                    vendorId in the vendorBean. That means we'll have to override the create function to accept a vendor Id--> 
+                                    <h:commandButton styleClass='btn pink darken-4 right' value="Add" action="#{menuBean.create()}" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <script>
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+            );
+
+            $('.modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    //                    alert("Ready");
+                    console.log(modal, trigger);
+                }
+                //                complete: function () {
+                //                    alert('Closed');
+                //                } // Callback for Modal close
+            }
+            );
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
+    </h:body>
+</html>
+
+

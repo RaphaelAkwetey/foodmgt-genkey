@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:box-shadow="http://java.sun.com/jsf/html">
+<head>
+  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+        rel="stylesheet">
+  <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>-->
+  <!--<title> Responsiive Admin Dashboard | CodingLab </title>-->
+  <link
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+          rel="stylesheet"
+  />
+
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- MDB -->
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+          rel="stylesheet"
+  />
+
+  <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+
+  <!--  <link-->
+  <!--          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"-->
+  <!--          rel="stylesheet"-->
+  <!--  />-->
+  <!--  <link-->
+  <!--          rel="stylesheet"-->
+  <!--          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"-->
+  <!--  />-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="../static/css/dashboardStyle.css" th:href="@{/css/dashboardStyle.css}">
+
+</head>
+<body style="background-color: #fff; margin: 0px; padding: 0px">
+
+
+
+<nav class="navbarstyle " style="background-color: #880e4f;
+      color: #ffffff;display: flex;justify-content: space-between;
+       box-shadow: 0px 3px 5px #7b7f86;height: 50px">
+
+  <div style=" display: flex;margin-left: 10px;justify-content: space-around;align-items: center;margin-top: auto;margin-bottom: auto" >
+    <!--        display: flex;-->
+    <!--        justify-content: space-around;-->
+    <!--        align-items: center;-->
+    <!--        /* background: #546E74; */-->
+    <!--        /* border-radius: 6px; */-->
+
+    <!--        min-width: 190px;-->
+    <span class="sidebar-button " >
+          <i class='bx bx-menu bx-md sidebarBtn'  style="float: left; margin-right: 20px"></i>
+        </span>
+    <a class="logo" th:href="@{/admin/admindashboard}"></a>
+  </div>
+
+
+  <div class="profile-details" >
+    <span class="welcomeText" style="float: right">Welcome,  </span>
+
+    <span style="margin-left: 5px" sec:authentication="principal.username"> Username</span>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle profileDropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown"  aria-expanded="false" style="background-color: transparent; border: transparent;box-shadow: none !important">
+        <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="welcomeProfileImageCircle"/>
+      </button>
+      <div class="dropdown-menu  w-5" aria-labelledby="dropdownMenuButton" style="flex-wrap: nowrap;min-width: 180px ; color: teal;
+                 position: absolute;
+                 transform: translate3d(-121px, 35px, 0px);
+                 top: 0px;
+                 left: 0px;">
+        <a class="dropdown-item" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" th:href="@{/admin/admindashboard}" style="margin: 0px">
+          <i class=' bx bx-home-circle'></i>
+          <span class="links_name" style="padding-left: 15px">Admin home</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/profile}" style="margin: 0px">
+          <i class='bx bx-user'></i>
+          <span class="links_name" style="padding-left: 15px">Profile</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/}" style="margin: 0px">
+          <i class='bx bx-food-menu' ></i>
+          <span class="links_name" style="padding-left: 15px">Menu</span>
+        </a>
+        <a class="dropdown-item" th:href="@{/logout}" style="margin: 0px">
+          <i class='bx bx bx-log-out' ></i>
+          <span class="links_name" style="padding-left: 15px">Logout</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="sidebar" style="margin-right: 10px">
+
+  <div class="profile-container">
+    <img src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg" alt="" class="circle responsive-img "/>
+
+    <div style="padding-left: 20px">
+      <p class="profile-container-user" style="color: white; font-size: 15px;margin-bottom: 0px;" sec:authentication="principal.username">
+        Admin
+      </p>
+      <div style="color: #fff!important; font-size: 12px;" th:text="${role}">Senior dev</div>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center">
+    <button class="createOrderButton" data-toggle="modal" data-target="#UserModalCenter">
+      <i class="fa fa-plus my-float" style="color: teal;"></i>  Create special order
+    </button>
+  </div>
+
+  <ul class="nav-links" >
+    <li>
+      <a th:href="@{/admin/admindashboard}" class="active">
+        <i class='bx bx-grid-alt' ></i>
+        <span class="links_name">Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminusers}">
+        <i class='bx bx-user' ></i>
+        <span class="links_name">Users</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminvendors}">
+        <i class='bx bxs-user-account' ></i>
+        <span class="links_name">Vendors</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/admin/adminmenu}">
+        <i class='bx bx-food-menu' ></i>
+        <span class="links_name">Upload Menu</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/reportcenter}">
+        <i class='bx bxs-report' style="font-size: larger"></i>
+        <span class="links_name">Report Center</span>
+      </a>
+    </li>
+
+    <!--        <li class="log_out">-->
+    <!--            <a th:href="@{/greeting}">-->
+    <!--                <i class='bx bx-log-out'></i>-->
+    <!--                <span class="links_name">Log out</span>-->
+    <!--            </a>-->
+    <!--        </li>-->
+  </ul>
+</div>
+<section class="home-section">
+  <div class="home-content">
+    <div class="overview-boxes">
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic">Orders bill</div>
+          <div style="color: #8f8fb1 !important; font-size: 12px; margin-bottom: 15px;">Total bill of all orders for the day</div>
+          <div class="number" th:text="'₵ ' + ${total}" ><span >&#8373;</span> 250 </div>
+        </div>
+        <div class="cart">
+          <div class="iconCircle">
+            <span>&#8373;</span>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic">Pending Orders</div>
+          <div style="color: #8f8fb1 !important; font-size: 12px; margin-bottom: 15px;">Total number of pending orders</div>
+          <div class="number"  th:text="${count}">5</div>
+        </div>
+        <div class="cart cartTwo">
+          <div class="iconCircle">
+            <span>&#8373;</span>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="right-side">
+          <div class="box-topic">Total monthly bill</div>
+          <div style="color: #8f8fb1 !important; font-size: 12px; margin-bottom: 15px;">Total bill of all orders for the month</div>
+          <div class="number"><span th:text="'₵ ' + ${bill}" >&#8373;</span></div>
+        </div>
+        <div class="cart cartThree ">
+          <div class="iconCircle">
+            <span >&#8373;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid BootstrapCards">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="CardContent">
+            <div class="allCard">
+              <div style="display: flex;justify-content: space-between">
+                <h1 class="cardsTitle">All Orders</h1>
+                <form th:action="@{/users/export/pdf}" method="get">
+                  <select name="day" onchange='this.form.submit()' style="border: none;
+                        height: 43px;
+                        padding: 10px;
+                        border-radius: 5px;
+                        margin-left: 20px;" >
+                    <option value = "" disabled selected>Download orders list</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                  </select>
+                  <noscript><input type=”submit” value=”Submit”></noscript>
+                </form>
+              </div>
+              <div>
+                <!-- Tabs navs -->
+                <ul class="nav nav-tabs nav-justified mb-3" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a
+                            class="nav-link active"
+                            id="ex3-tab-1"
+                            data-toggle="tab"
+                            href="#ex3-tabs-1"
+                            role="tab"
+                            aria-controls="ex3-tabs-1"
+                            aria-selected="true"
+                    >Monday</a
+                    >
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a
+                            class="nav-link"
+                            id="ex3-tab-2"
+                            data-toggle="tab"
+                            href="#ex3-tabs-2"
+                            role="tab"
+                            aria-controls="ex3-tabs-2"
+                            aria-selected="false"
+                    >Tuesday</a
+                    >
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a
+                            class="nav-link"
+                            id="ex3-tab-3"
+                            data-toggle="tab"
+                            href="#ex3-tabs-3"
+                            role="tab"
+                            aria-controls="ex3-tabs-3"
+                            aria-selected="false"
+                    >Wednesday</a
+                    >
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a
+                            class="nav-link"
+                            id="ex3-tab-4"
+                            data-toggle="tab"
+                            href="#ex3-tabs-4"
+                            role="tab"
+                            aria-controls="ex3-tabs-4"
+                            aria-selected="false"
+                    >Thursday</a
+                    >
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a
+                            class="nav-link"
+                            id="ex3-tab-5"
+                            data-toggle="tab"
+                            href="#ex3-tabs-5"
+                            role="tab"
+                            aria-controls="ex3-tabs-5"
+                            aria-selected="false"
+                    >Friday</a
+                    >
+                  </li>
+                </ul>
+                <!-- Tabs content -->
+                <div class="tab-content">
+                  <div
+                          class="tab-pane fade show active"
+                          id="ex3-tabs-1"
+                          role="tabpanel"
+                          aria-labelledby="ex3-tab-1"
+                  >
+                    <div class="tableContainer">
+                      <table class="table foodTable" style="width: 100%">
+                        <thead>
+                        <tr>
+                          <th scope="col" style="width: 15%">User</th>
+                          <th scope="col" style="width: 45%">Food </th>
+                          <th scope="col" style="width: 10%">Day</th>
+                          <th scope="col" style="width: 10%;text-align: center">Price</th>
+                          <th scope="col" style="width: 10%;text-align: center">Status</th>
+                          <th scope="col" style="width: 10%;text-align: center">Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="order : ${odd}">
+                          <td th:text="${order.firstname}"></td>
+                          <td th:text="${order.food}"></td>
+                          <td th:text="${order.transactionShorterDate}"></td>
+                          <td th:text="${order.cost}" style="text-align: center"></td>
+                          <td style="background-color: #ffc233;color:#fff;padding:5px; text-align: center; border-radius: 50px; display:inline-flex; margin-top: 15px;font-size: 15px;" th:text="${order.status}"></td>
+                          <td style="text-align: center">
+                            <a th:href="@{'/processOrder/' + ${order.id}}"><button class="btn receiveBtn"  style="background-color: transparent">Received</button></a>
+                            <a th:href="@{'/processOrder2/' + ${order.id}}"><button class="btn rejectBtn"  style="background-color: transparent">Reject</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div
+                          class="tab-pane fade"
+                          id="ex3-tabs-2"
+                          role="tabpanel"
+                          aria-labelledby="ex3-tab-2"
+                  >
+                    <div class="tableContainer">
+                      <table class="table foodTable" style="width: 100%">
+                        <thead>
+                        <tr>
+                          <th scope="col" style="width: 15%">User</th>
+                          <th scope="col" style="width: 45%">Food </th>
+                          <th scope="col" style="width: 10%">Day</th>
+                          <th scope="col" style="width: 10%;text-align: center">Price</th>
+                          <th scope="col" style="width: 10%;text-align: center">Status</th>
+                          <th scope="col" style="width: 10%;text-align: center">Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="order : ${odd1}">
+                          <td th:text="${order.firstname}"></td>
+                          <td th:text="${order.food}"></td>
+                          <td th:text="${order.transactionShorterDate}"></td>
+                          <td th:text="${order.cost}" style="text-align: center"></td>
+                          <td style="background-color: #ffc233;color:#fff;padding:5px; text-align: center; border-radius: 50px; display:inline-flex; margin-top: 15px;font-size: 15px;" th:text="${order.status}"></td>
+                          <td style="text-align: center">
+                            <a th:href="@{'/processOrder/' + ${order.id}}"><button class="btn receiveBtn"  style="background-color: transparent">Received</button></a>
+                            <a th:href="@{'/processOrder2/' + ${order.id}}"><button class="btn rejectBtn"  style="background-color: transparent">Reject</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div
+                          class="tab-pane fade"
+                          id="ex3-tabs-3"
+                          role="tabpanel"
+                          aria-labelledby="ex3-tab-3"
+                  >
+                    <div class="tableContainer">
+                      <table class="table foodTable" style="width: 100%">
+                        <thead>
+                        <tr>
+                          <th scope="col" style="width: 15%">User</th>
+                          <th scope="col" style="width: 45%">Food </th>
+                          <th scope="col" style="width: 10%">Day</th>
+                          <th scope="col" style="width: 10%;text-align: center">Price</th>
+                          <th scope="col" style="width: 10%;text-align: center">Status</th>
+                          <th scope="col" style="width: 10%;text-align: center">Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="order : ${odd2}">
+                          <td th:text="${order.firstname}"></td>
+                          <td th:text="${order.food}"></td>
+                          <td th:text="${order.transactionShorterDate}"></td>
+                          <td th:text="${order.cost}" style="text-align: center"></td>
+                          <td style="background-color: #ffc233;color:#fff;padding:5px; text-align: center; border-radius: 50px; display:inline-flex; margin-top: 15px;font-size: 15px;" th:text="${order.status}"></td>
+                          <td style="text-align: center">
+                            <a th:href="@{'/processOrder/' + ${order.id}}"><button class="btn receiveBtn"  style="background-color: transparent">Received</button></a>
+                            <a th:href="@{'/processOrder2/' + ${order.id}}"><button class="btn rejectBtn"  style="background-color: transparent">Reject</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div
+                          class="tab-pane fade"
+                          id="ex3-tabs-4"
+                          role="tabpanel"
+                          aria-labelledby="ex3-tab-4"
+                  >
+                    <div class="tableContainer">
+                      <table class="table foodTable" style="width: 100%">
+                        <thead>
+                        <tr>
+                          <th scope="col" style="width: 15%">User</th>
+                          <th scope="col" style="width: 45%">Food </th>
+                          <th scope="col" style="width: 10%">Day</th>
+                          <th scope="col" style="width: 10%;text-align: center">Price</th>
+                          <th scope="col" style="width: 10%;text-align: center">Status</th>
+                          <th scope="col" style="width: 10%;text-align: center">Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="order : ${odd3}">
+                          <td th:text="${order.firstname}"></td>
+                          <td th:text="${order.food}"></td>
+                          <td th:text="${order.transactionShorterDate}"></td>
+                          <td th:text="${order.cost}" style="text-align: center"></td>
+                          <td style="background-color: #ffc233;color:#fff;padding:5px; text-align: center; border-radius: 50px; display:inline-flex; margin-top: 15px;font-size: 15px;" th:text="${order.status}"></td>
+                          <td style="text-align: center">
+                            <a th:href="@{'/processOrder/' + ${order.id}}"><button class="btn receiveBtn"  style="background-color: transparent">Received</button></a>
+                            <a th:href="@{'/processOrder2/' + ${order.id}}"><button class="btn rejectBtn"  style="background-color: transparent">Reject</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div
+                          class="tab-pane fade"
+                          id="ex3-tabs-5"
+                          role="tabpanel"
+                          aria-labelledby="ex3-tab-5"
+                  >
+                    <div class="tableContainer">
+                      <table class="table foodTable" style="width: 100%">
+                        <thead>
+                        <tr>
+                          <th scope="col" style="width: 15%">User</th>
+                          <th scope="col" style="width: 45%">Food </th>
+                          <th scope="col" style="width: 10%">Day</th>
+                          <th scope="col" style="width: 10%;text-align: center">Price</th>
+                          <th scope="col" style="width: 10%;text-align: center">Status</th>
+                          <th scope="col" style="width: 10%;text-align: center">Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="order : ${odd4}">
+                          <td th:text="${order.firstname}"></td>
+                          <td th:text="${order.food}"></td>
+                          <td th:text="${order.transactionShorterDate}"></td>
+                          <td th:text="${order.cost}" style="text-align: center"></td>
+                          <td style="background-color: #ffc233;color:#fff;padding:5px; text-align: center; border-radius: 50px; display:inline-flex; margin-top: 15px;font-size: 15px;" th:text="${order.status}"></td>
+                          <td style="text-align: center">
+                            <a th:href="@{'/processOrder/' + ${order.id}}"><button class="btn receiveBtn"  style="background-color: transparent">Received</button></a>
+                            <a th:href="@{'/processOrder2/' + ${order.id}}"><button class="btn rejectBtn"  style="background-color: transparent">Reject</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- Tabs content -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="summaryCardContent">
+            <div class="summaryCard">
+              <div class="CardContent">
+                <h1 class="cardsTitle" style="padding-bottom: 10px">Waybill validation list</h1>
+                <div class="tableContainer">
+                  <table class="table" style="width: 100%">
+                    <thead>
+                    <tr>
+                      <th scope="col" style="width: 80%">Food</th>
+                      <th scope="col" style="width: 20%">Number</th>
+                      <!--<th scope="col">Date and time</th>-->
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="Summary : ${allSummary}">
+                      <td th:text="${Summary.food}"></td>
+                      <td th:text="${Summary.menuItemPosition}"></td>
+                      <!--<td th:text="${Summary.cost}"></td>-->
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+</section>
+
+
+
+<!-- Add food modal -->
+<div class="modal fade" id="UserModalCenter" tabindex="-1" role="dialog" aria-labelledby="UserModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Create an order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/specialOrder}" method="post" class="needs-validation" novalidate>
+          <div class="form-group">
+            <select  class="custom-select form-control" name="username" id="validationCustom01" required>
+              <option value = "" disabled selected>Select User</option>
+              <option th:each="user: ${users}"
+                      th:text="${user.firstname}">...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <select  class="custom-select form-control" name="dayPosition" id="validationCustom02" required>
+                <option value = "" disabled selected>Select Day</option>
+                <option value="0">Monday</option>
+                <option value="1">Tuesday</option>
+                <option value="2">Wednesday</option>
+                <option value="3">Thursday</option>
+                <option value="4">Friday</option>
+              </select>
+<!--              <div class="valid-feedback">-->
+<!--                Looks good!-->
+<!--              </div>-->
+              <div class="invalid-feedback">
+                Please select day.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <input class="custom-select" type="date" name="deliveryDate" style="width: 100%" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <select  class="custom-select form-control" name="orderPosition" id="validationCustom03" required>
+              <option value = "" disabled selected>Select food</option>
+              <optgroup label="MONDAY" ></optgroup>
+              <option th:each="bing: ${monday}"
+                      th:text="${bing.food}">...</option>
+              <optgroup label="TUESDAY" ></optgroup>
+              <option th:each="bing: ${tuesday}"
+                      th:text="${bing.food}">...</option>
+              <optgroup label="WEDNESDAY" ></optgroup>
+              <option th:each="bing: ${wednesday}"
+                      th:text="${bing.food}">...</option>
+              <optgroup label="THURSDAY" ></optgroup>
+              <option th:each="bing: ${thursday}"
+                      th:text="${bing.food}">...</option>
+              <optgroup label="FRIDAY" ></optgroup>
+              <option th:each="bing: ${friday}"
+                      th:text="${bing.food}">...</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select date.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="action" class="btn btn-primary" style="float: right; font-size: 15px">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+
+<script  th:inline="javascript">
+  //Function for height of sidebar
+  var height = $('.home-section').height()
+  $('.sidebar').height(height)
+
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".sidebarBtn");
+  sidebarBtn.onclick = function() {
+    sidebar.classList.toggle("active");
+    if(sidebar.classList.contains("box-menu")){
+      sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+    }else
+      sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+  }
+
+  const Monday = 0;
+  const Tuesday = 1;
+  const Wednesday = 2;
+  const Thursday = 3;
+  const Friday = 4;
+
+
+  //Function to disable receive button on received status
+  $(document).ready(function() {
+
+    $('.table #btnDelete').on('click',function(event) {
+      event.preventDefault();
+
+      var href = $(this).attr('href');
+      $('#deleteModal #delRef').attr('href', href);
+      $('#deleteModal').modal();
+
+    });
+
+    $(".foodTable tbody tr").each(function() {
+
+      var $this = $(this);
+      let RECEIVED= "RECEIVED";
+      let PENDING= "PENDING";
+      if ($this.children("td:nth-child(5)").text() === RECEIVED ) {
+        ($this.children("td:nth-child(5)").css('background-color', '#28a745'));
+
+        $this.find('.rejectBtn').show();
+        $this.find('.receiveBtn').hide();
+        //Change text of button element
+        // $this.find('.receiveBtn').html("Reject");
+        $this.find('.rejectBtn').css('color', '#e31111')
+        $this.find('.rejectBtn').css('border-color', '#e31111')
+        // $this.find('button').prop('disabled', true);
+      }else if ($this.children("td:nth-child(5)").text() === PENDING ){
+        $this.find('.receiveBtn').css('color', '#28a745')
+        $this.find('.receiveBtn').css('border-color', '#28a745')
+        $this.find('.rejectBtn').hide();
+        $this.find('.receiveBtn').show();
+        // $this.find('button').prop('disabled', false);
+      }
+
+    });
+
+
+  });
+
+  $(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+      localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+      $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+  });
+
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+</html>
