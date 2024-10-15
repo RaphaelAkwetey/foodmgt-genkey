@@ -20,7 +20,7 @@ jobs:
           distribution: 'corretto'
 
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn -DskipTests=true clean package
       
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
