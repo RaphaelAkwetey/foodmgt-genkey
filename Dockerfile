@@ -1,12 +1,8 @@
 WORKDIR /app
 
-COPY ./target/foodmgt-0.0.1-SNAPSHOT.jar ./
-
 FROM amazoncorretto:11
 
-WORKDIR /app
-
-COPY --from=build /app/foodmgt-0.0.1-SNAPSHOT.jar foodmgt.jar
+COPY --from=build /target/app/foodmgt-0.0.1-SNAPSHOT.jar foodmgt.jar
 
 EXPOSE 8080
 
